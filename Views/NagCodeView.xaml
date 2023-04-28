@@ -1,0 +1,53 @@
+﻿<Controls:MetroWindow x:Class="NagCode.Views.NagCodeView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Nag Code" Height="472.6" MinWidth="13" MaxWidth="177" Width="177" TextOptions.TextFormattingMode="Display"
+    Icon="../favicon.ico" ShowIconOnTitleBar="False" ShowCloseButton="true" ShowMinButton="true" ShowMaxRestoreButton="false"
+    xmlns:local="using:NagCode"
+    WindowTitleBrush="#800080"
+    DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
+    Name="NagCodeViewWindow" Topmost="{Binding IsTopmost, Mode=TwoWay}" Cursor="Hand" Foreground="#FFA59C9C">
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="293*"/>
+      <RowDefinition Height="33"/>
+    </Grid.RowDefinitions>
+    <Grid Grid.Row="0">
+      <ListBox x:Name="ListSnippets" HorizontalContentAlignment="Stretch" SelectionMode="Single"
+                  FontSize="12" ItemsSource="{Binding SnippetList, Mode=OneWay}" 
+                     MouseDoubleClick="ListSnippets_MouseDoubleClick" PreviewKeyDown="ListSnippets_PreviewKeyDown"
+                     SelectedItem="{Binding SelectedSnippet, Mode=TwoWay}"
+                     ContextMenu="{StaticResource ContextMenuSnippetsList}" MouseMove="ListSnippets_MouseMove" SelectionChanged="ListSnippets_SelectionChanged" PreviewMouseDown="ListSnippets_PreviewMouseDown">
+
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Grid HorizontalAlignment="Stretch">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+
+              <Grid.ToolTip>
+                <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="FctbPreviewEditor" FontFamily="Consolas" SyntaxHighlighting="C#" FontSize="10pt" Document="{Binding Document}" />
+              </Grid.ToolTip>
+
+              <TextBlock Text="{Binding Id}" Grid.Column="0" />
+              <TextBlock Text="{Binding Label}" Grid.Column="1" />
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Grid>
+    <Grid Grid.Row="1" Name="ButtonBar">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <Button x:Name="Menu" Content="Menu" Command="{Binding OpenMenu}" Grid.Column="0" Margin="7,-5,3,5"/>
+      <Button Content="Present" Click="PresentButton_Click" Grid.Column="1" Margin="10,-5,8,5" />
+    </Grid>
+  </Grid>
+</Controls:MetroWindow>
+    

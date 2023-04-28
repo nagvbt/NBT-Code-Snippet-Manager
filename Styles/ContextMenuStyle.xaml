@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:NagCode">
+
+  <ContextMenu x:Key="ContextMenuSnippetsList">
+    <MenuItem Header="Insert From Clipboard" Command="{Binding InsertNewSnippet}" />
+    <MenuItem Header="Insert Separator" Command="{Binding InsertSeperator}" />
+    <MenuItem Header="Delete" Command="{Binding DeleteSnippet}" />
+    <MenuItem Header="Move Up (KeyUp)" Command="{Binding MoveSnippetUp}" />
+    <MenuItem Header="Move Down (KeyDown)" Command="{Binding MoveSnippetDown}" />
+    <MenuItem Header="Exit" Command="{Binding Exit}" />
+  </ContextMenu>
+
+</ResourceDictionary>

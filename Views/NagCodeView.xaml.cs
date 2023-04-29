@@ -71,7 +71,7 @@
     private void ListSnippets_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
       var ewl = new Models.EditViewLogic(NagCodeModel, ListSnippets);
-      ewl.OpeningRequest(NagCodeModel.SelectedSnippet);
+      ewl.OpeningRequest(NagCodeModel.SelectedSnippet, Left, Top, Width, Height);
     }
 
     private void ListSnippets_PreviewKeyDown(object sender, KeyEventArgs e)

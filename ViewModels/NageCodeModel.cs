@@ -262,8 +262,8 @@
       // Configure save file dialog box
       Microsoft.Win32.OpenFileDialog openDialog = new Microsoft.Win32.OpenFileDialog();
       // Default file name
-      openDialog.FileName = "NewSnip"; 
-      openDialog.DefaultExt = ".json"; 
+      openDialog.FileName = "NewSnip";
+      openDialog.DefaultExt = ".json";
       openDialog.Filter = "JSON documents (.json)|*.json"; // Filter files by extension
 
       // Show save file dialog box
@@ -273,15 +273,37 @@
       if (result == true)
       {
         string filename = openDialog.FileName;
-        using (TextReader reader = new StreamReader(filename))
-        {
-          //render json
-          var fileContent = reader.ReadToEnd();
-          DeserializeList(fileContent);
-          SelectedSnippet = null;
-        }
+        SaveSnipFilePath(filename);
+        ReadSnipFile(filename);
       }
     }
+
+    private static void SaveSnipFilePath(string filename)
+    {
+      Properties.Settings.Default.snipFilePath = filename;
+      Properties.Settings.Default.Save();
+    }
+
+    private void ReadSnipFile(string filename)
+    {
+      using (TextReader reader = new StreamReader(filename))
+      {
+        var fileContent = reader.ReadToEnd();
+        DeserializeList(fileContent);
+        SelectedSnippet = null;
+      }
+    }
+
+    public void StartApp()
+    {
+      string filename = Properties.Settings.Default.snipFilePath;
+      if (filename != "")
+      {
+        ReadSnipFile(filename);
+      }
+
+    }
+
     private void ExitItemClick(object sender, RoutedEventArgs e)
     {
       ExitMethod();

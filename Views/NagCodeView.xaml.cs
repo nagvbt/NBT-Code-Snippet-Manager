@@ -2,14 +2,15 @@
 {
   using MahApps.Metro.Controls;
   using NagCode.BL.SnipLogic;
+  using NagCode.ViewModels;
   using System;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
-  
+
   public partial class NagCodeView : MetroWindow
   {
-    public ViewModels.NageCodeModel NagCodeModel => DataContext as ViewModels.NageCodeModel;
+    public NageCodeModel NagCodeModel => DataContext as NageCodeModel;
     public ClipboardNotification SnippetLogic { get; set; }
 
     // Drag and Drop ---{
@@ -27,6 +28,8 @@
       ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
       ToolTipService.InitialShowDelayProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(0));
       ToolTipService.BetweenShowDelayProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(0));
+
+      NagCodeModel.StartApp();
     }
 
     private void ClipboardUpdate(object sender, EventArgs e)
@@ -172,6 +175,11 @@
       Size dragSize = new Size(20, 20);
       dragStartPoint = e.GetPosition(ListSnippets);
       draggingElement = sender as FrameworkElement;
+    }
+
+    private void NagCodeViewWindow_Closed(object sender, EventArgs e)
+    {
+      NagCodeModel.ExitMethod();
     }
   }
 }

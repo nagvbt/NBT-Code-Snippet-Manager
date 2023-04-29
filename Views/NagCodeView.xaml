@@ -7,7 +7,7 @@
     xmlns:local="using:NagCode"
     WindowTitleBrush="#800080"
     DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
-    Name="NagCodeViewWindow" Topmost="{Binding IsTopmost, Mode=TwoWay}" Cursor="Hand" Foreground="#FFA59C9C">
+    Name="NagCodeViewWindow" Topmost="{Binding IsTopmost, Mode=TwoWay}" Cursor="Hand" Foreground="#FFA59C9C" Closed="NagCodeViewWindow_Closed">
 
   <Grid>
     <Grid.RowDefinitions>

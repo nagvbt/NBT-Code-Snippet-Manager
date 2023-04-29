@@ -22,5 +22,17 @@ namespace NagCode.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string snipFilePath {
+            get {
+                return ((string)(this["snipFilePath"]));
+            }
+            set {
+                this["snipFilePath"] = value;
+            }
+        }
     }
 }

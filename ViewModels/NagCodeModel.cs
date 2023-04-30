@@ -150,12 +150,17 @@
       }
     }
 
+    public void OnPropertyChanged()
+    {
+      OnPropertyChanged(nameof(SnippetList));
+    }
+
     internal void Add(string label, string data)
     {
       SnippetList.Add(new Models.Snip(SnippetCounter, label, data));
       SnippetCounter++;
       FixIds();
-      OnPropertyChanged(nameof(SnippetList));
+     OnPropertyChanged(nameof(SnippetList));
     }
 
     internal void InsertSeperatorMethod()
@@ -257,15 +262,20 @@
         // Save document
         string filename = saveDialog.FileName;
 
-        //serialize list as JSON
-        string jsonToSave = SerializeList();
-
-        TextWriter writer = new StreamWriter(filename);
-        writer.Write(jsonToSave);
-        writer.Close();
-
+        WriteSnipFile(filename);
+        SaveSnipFilePath(filename);
         IsDirty = false;
       }
+    }
+
+    private void WriteSnipFile(string filename)
+    {
+      //serialize list as JSON
+      string jsonToSave = SerializeList();
+
+      TextWriter writer = new StreamWriter(filename);
+      writer.Write(jsonToSave);
+      writer.Close();
     }
 
     void ItemLoadClick(object sender, RoutedEventArgs e)

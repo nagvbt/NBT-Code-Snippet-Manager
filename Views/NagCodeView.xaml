@@ -38,20 +38,20 @@
       </ListBox>
     </Grid>
 
-    <Grid Grid.Row="1" Name="ButtonBar" Background="#FF1D1B1B">
+    <Grid Grid.Row="1" Name="ButtonBar" Background="#FF502350">
       <Thumb Opacity=".001" Grid.Row="1" Grid.RowSpan="2" DragDelta="Thumb_DragDelta" Background="#FF2F2828">
       </Thumb>
       <CheckBox  IsChecked="True" 
                    HorizontalAlignment="Center" Width="70" x:Name="MyTopmostCheckBox" 
                    Checked="MyTopmostCheckBox_Checked" Unchecked="MyTopmostCheckBox_Unchecked" VerticalAlignment="Top" Margin="0,5,0,0" Foreground="White">topmost</CheckBox>
 
-      <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center"  >
-        <Button Width="72" x:Name="Menu" Command="{Binding OpenMenu}" Height="28" Margin="0,-1,0,1" VerticalAlignment="Bottom">
+      <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,17,0,1"  >
+        <Button Width="72" x:Name="Menu" Command="{Binding OpenMenu}" Height="20" Margin="0,-1,0,1" VerticalAlignment="Bottom">
           <!--<Image Source="../favicon.ico"></Image>-->
           Menu
         </Button>
         
-        <Button Width="64" Margin="10,-1,0,1" Content="Present" Click="PresentButton_Click" Height="28" VerticalAlignment="Bottom"/>
+        <Button Width="64" Margin="10,-1,0,1" Content="Present" Click="PresentButton_Click" Height="20" VerticalAlignment="Bottom"/>
       </StackPanel>
     </Grid>
   </Grid>

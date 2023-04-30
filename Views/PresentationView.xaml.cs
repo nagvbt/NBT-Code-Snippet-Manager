@@ -11,7 +11,7 @@
   {
     public ViewModels.NagCodeModel NagCodeModel => DataContext as ViewModels.NagCodeModel;
 
-    private DragDropManager dragDropManager;
+    private DragDropManager dragDropManager = new DragDropManager();
     private BL.EditViewLogic ewl;
 
     public PresentationView()
@@ -19,7 +19,7 @@
       InitializeComponent();
       SetViewDimentions();
       DisableScrollbars();
-      dragDropManager = new DragDropManager();
+    //  dragDropManager = new DragDropManager();
     }
 
     private void SetViewDimentions()

@@ -65,15 +65,15 @@
       editWindow.Show();
     }
 
-    internal void OpeningRequest(ISnip selectedSnippet, bool IsPresetView)
+    internal void OpeningRequest(ISnip selectedSnippet, bool IsPresentView)
     {
       if (SnipList.SelectedIndex != -1)
       {
         if (!selectedSnippet.IsSeperator)
         {
-          var editWindow = new Views.EditView((Snip)NagCodeModel.SelectedSnippet);
+          var editWindow = new Views.EditView((Snip)NagCodeModel.SelectedSnippet, NagCodeModel);
 
-          if (IsPresetView)
+          if (IsPresentView)
           {
             editWindow.WindowStartupLocation = WindowStartupLocation.Manual;
             editWindow.Left = (PresentViewLeft == 0) ? 50 : (PresentViewLeft - editWindow.Width);

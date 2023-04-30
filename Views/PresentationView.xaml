@@ -11,17 +11,17 @@
         Width="40" MaxWidth="20"
         Topmost="True"
 
-        DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}" Closed="PresentWindowWindow_Closed">
+        DataContext="{Binding Source={StaticResource Locator}, Path=NagCodeViewModel}" Closed="PresentWindowWindow_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="293*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListBox x:Name="ListSnippets" HorizontalContentAlignment="Stretch" SelectionMode="Single"
-                  FontSize="12" ItemsSource="{Binding SnippetList, Mode=OneWay}"
-                     SelectedItem="{Binding SelectedSnippet, Mode=TwoWay}"
-                     MouseDoubleClick="ListSnippets_MouseDoubleClick" PreviewMouseDown="ListSnippets_PreviewMouseDown" SelectionChanged="ListSnippets_SelectionChanged" MouseMove="ListSnippets_MouseMove" Margin="0,0,-25,0">
+            <ListBox x:Name="SnipList" HorizontalContentAlignment="Stretch" SelectionMode="Single"
+                  FontSize="12" ItemsSource="{Binding SnipList, Mode=OneWay}"
+                     SelectedItem="{Binding SelectedSnip, Mode=TwoWay}"
+                     MouseDoubleClick="SnipList_MouseDoubleClick" PreviewMouseDown="SnipList_PreviewMouseDown" SelectionChanged="SnipList_SelectionChanged" MouseMove="SnipList_MouseMove" Margin="0,0,-25,0">
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -36,7 +36,7 @@
                             </Grid.ToolTip>
                             
                             <TextBlock Text="{Binding Id}" Grid.Column="0" />
-                            <TextBlock Text="{Binding Label}" Grid.Column="1" />
+                            <TextBlock Text="{Binding Name}" Grid.Column="1" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

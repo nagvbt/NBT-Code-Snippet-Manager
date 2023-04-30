@@ -5,14 +5,14 @@ namespace NagCode.ViewModels
 {
   public class EditViewModel : ObservableRecipient
   {
-    private Snip _snippetToEdit;
+    private Snip _snipToEdit;
 
-    public Snip SnippetToEdit
+    public Snip SnipToEdit
     {
-      get => _snippetToEdit;
+      get => _snipToEdit;
       set
       {
-        _snippetToEdit = value;
+        _snipToEdit = value;
         OnPropertyChanged();
       }
     }

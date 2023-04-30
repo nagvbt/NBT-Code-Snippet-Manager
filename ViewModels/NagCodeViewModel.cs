@@ -10,19 +10,18 @@
   using System.Linq;
   using System.Windows;
   using System.Windows.Controls;
-  using System.Windows.Media.Media3D;
-
-  public class NagCodeModel : ObservableRecipient
+  
+  public class NagCodeViewModel : ObservableRecipient
   {
-    private ObservableCollection<Interfaces.ISnip> snippetList = new ObservableCollection<Interfaces.ISnip>();
-    private int SnippetCounter = 1;
-    private Interfaces.ISnip selectedSnippet;
+    private ObservableCollection<Interfaces.ISnip> _snipList = new ObservableCollection<Interfaces.ISnip>();
+    private int _snipCounter = 1;
+    private Interfaces.ISnip _selectedSnip;
     private ContextMenu _mainMenu;
     private bool _isTopmost = true;
 
-    public NagCodeModel()
+    public NagCodeViewModel()
     {
-      SnippetList = new ObservableCollection<Interfaces.ISnip>();
+      SnipList = new ObservableCollection<Interfaces.ISnip>();
 
       InitializeMainMenu();
 
@@ -58,26 +57,26 @@
       }
     }
 
-    public Interfaces.ISnip SelectedSnippet
+    public Interfaces.ISnip SelectedSnip
     {
-      get => selectedSnippet;
+      get => _selectedSnip;
       set
       {
-        selectedSnippet = value;
+        _selectedSnip = value;
 
-        if (selectedSnippet != null)
+        if (_selectedSnip != null)
         {
-          Clipboard.SetText(selectedSnippet.Data);
+          Clipboard.SetText(_selectedSnip.Data);
         }
 
         OnPropertyChanged();
       }
     }
 
-    public ObservableCollection<Interfaces.ISnip> SnippetList
+    public ObservableCollection<Interfaces.ISnip> SnipList
     {
-      get => snippetList;
-      set => snippetList = value;
+      get => _snipList;
+      set => _snipList = value;
     }
 
     private void OpenMenuMethod()
@@ -88,42 +87,42 @@
     private void SelectedSnippetChangedEvent(object sender, PropertyChangedEventArgs e)
     {
       Models.Snip modifiedSnippet = (Models.Snip)sender;
-      SelectedSnippet = modifiedSnippet;
+      SelectedSnip = modifiedSnippet;
     }
 
     internal void SelectSnippet(Interfaces.ISnip snippetListItem)
     {
-      SelectedSnippet = snippetListItem;
-      SelectedSnippet.PropertyChanged += SelectedSnippetChangedEvent;
+      SelectedSnip = snippetListItem;
+      SelectedSnip.PropertyChanged += SelectedSnippetChangedEvent;
     }
 
     internal bool ItemWithDataExists(string data)
     {
-      return SnippetList.Any(x => x.Data == data);
+      return SnipList.Any(x => x.Data == data);
     }
 
     internal void SwapSnippets(int indexA, int indexB)
     {
-      if (indexB >= 0 && SnippetList.Count > indexB)
+      if (indexB >= 0 && SnipList.Count > indexB)
       {
-        // Remember snippet
-        var tmpA = SnippetList[indexA];
-        var tmpB = SnippetList[indexB];
+        // Remember snip
+        var tmpA = SnipList[indexA];
+        var tmpB = SnipList[indexB];
 
-        // Swap snippet
-        SnippetList[indexA] = tmpB;
-        SnippetList[indexB] = tmpA;
+        // Swap snip
+        SnipList[indexA] = tmpB;
+        SnipList[indexB] = tmpA;
 
         FixIds();
 
-        SelectedSnippet = SnippetList[indexB];
+        SelectedSnip = SnipList[indexB];
       }
     }
 
     private void FixIds()
     {
       var counter = 1;
-      foreach (var item in SnippetList)
+      foreach (var item in SnipList)
       {
         if (!item.IsSeperator)
         {
@@ -136,40 +135,40 @@
         }
       }
 
-      SnippetCounter = counter;
+      _snipCounter = counter;
     }
 
     internal void DeleteSnippetMethod()
     {
-      if (SelectedSnippet != null)
+      if (SelectedSnip != null)
       {
         IsDirty = true;
-        SnippetList.Remove(SelectedSnippet);
+        SnipList.Remove(SelectedSnip);
         FixIds();
-        OnPropertyChanged(nameof(SnippetList));
+        OnPropertyChanged(nameof(SnipList));
       }
     }
 
     public void OnPropertyChanged()
     {
-      OnPropertyChanged(nameof(SnippetList));
+      OnPropertyChanged(nameof(SnipList));
     }
 
-    internal void Add(string label, string data)
+    internal void Add(string name, string data)
     {
-      SnippetList.Add(new Models.Snip(SnippetCounter, label, data));
-      SnippetCounter++;
+      SnipList.Add(new Models.Snip(_snipCounter, name, data));
+      _snipCounter++;
       FixIds();
-     OnPropertyChanged(nameof(SnippetList));
+     OnPropertyChanged(nameof(SnipList));
     }
 
     internal void InsertSeperatorMethod()
     {
       IsDirty = true;
 
-      SnippetList.Add(new Models.Seperator());
-      SnippetCounter = 1;
-      OnPropertyChanged(nameof(SnippetList));
+      SnipList.Add(new Models.Seperator());
+      _snipCounter = 1;
+      OnPropertyChanged(nameof(SnipList));
     }
 
 
@@ -181,24 +180,24 @@
 
     internal void Clear()
     {
-      SnippetList.Clear();
-      OnPropertyChanged(nameof(SnippetList));
+      SnipList.Clear();
+      OnPropertyChanged(nameof(SnipList));
     }
 
     internal Interfaces.ISnip GetItemByListId(int selectedIndex)
     {
-      return SnippetList[selectedIndex];
+      return SnipList[selectedIndex];
     }
 
     internal string SerializeList()
     {
-      return JsonConvert.SerializeObject(SnippetList, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects, TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple });
+      return JsonConvert.SerializeObject(SnipList, Formatting.Indented, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects, TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple });
     }
 
     internal void DeserializeList(string fileContent)
     {
-      SnippetList = JsonConvert.DeserializeObject<ObservableCollection<Interfaces.ISnip>>(fileContent, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
-      OnPropertyChanged(nameof(SnippetList));
+      SnipList = JsonConvert.DeserializeObject<ObservableCollection<Interfaces.ISnip>>(fileContent, new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Objects });
+      OnPropertyChanged(nameof(SnipList));
     }
 
     /// <summary>
@@ -311,7 +310,7 @@
       {
         var fileContent = reader.ReadToEnd();
         DeserializeList(fileContent);
-        SelectedSnippet = null;
+        SelectedSnip = null;
       }
     }
 
@@ -407,7 +406,7 @@
     {
       IsDirty = true;
 
-      int selectedIndex = SnippetList.IndexOf(SelectedSnippet);
+      int selectedIndex = SnipList.IndexOf(SelectedSnip);
       if (selectedIndex != -1 && selectedIndex != 0)
       {
         SwapSnippets(selectedIndex, selectedIndex - 1);
@@ -418,8 +417,8 @@
     {
       IsDirty = true;
 
-      int selectedIndex = SnippetList.IndexOf(SelectedSnippet);
-      if (SelectedSnippet != null)
+      int selectedIndex = SnipList.IndexOf(SelectedSnip);
+      if (SelectedSnip != null)
       {
         SwapSnippets(selectedIndex, selectedIndex + 1);
       }

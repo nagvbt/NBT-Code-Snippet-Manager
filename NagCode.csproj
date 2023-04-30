@@ -138,7 +138,7 @@
       <DependentUpon>PresentationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\EditViewModel.cs" />
-    <Compile Include="ViewModels\NagCodeModel.cs" />
+    <Compile Include="ViewModels\NagCodeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Page Include="Styles\ButtonStyle.xaml">
       <SubType>Designer</SubType>

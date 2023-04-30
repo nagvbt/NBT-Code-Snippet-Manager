@@ -10,13 +10,13 @@
 
             Ioc.Default.ConfigureServices(
               new ServiceCollection()
-              .AddSingleton<NagCodeModel>()
+              .AddSingleton<NagCodeViewModel>()
               .AddSingleton<EditViewModel>()
               .BuildServiceProvider());
         }
 
         // Returns singleton Models
-        public NagCodeModel MainViewModel => Ioc.Default.GetService<NagCodeModel>();
+        public NagCodeViewModel NagCodeViewModel => Ioc.Default.GetService<NagCodeViewModel>();
         public EditViewModel EditViewModel => Ioc.Default.GetService<EditViewModel>();
     }
 }

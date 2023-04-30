@@ -10,38 +10,25 @@
 
   public class EditViewLogic
   {
-    public ViewModels.NagCodeModel NagCodeModel;
+    public NagCodeViewModel NagCodeModel { get; set; }
+    public ListBox SnipList { get; set; }
+    public double PresentViewLeft { get; set; }
+    public double PresentViewTop { get; set; }
 
-    private ListBox SnipList;
-
-    private double _presentViewLeft;  // the name field
-    private double _presentViewTop;  // the name field
-    public double PresentViewLeft    // the Name property
+    public EditViewLogic(NagCodeViewModel nagCodeModel, ListBox snipList)
     {
-      get => _presentViewLeft;
-      set => _presentViewLeft = value;
-    }
-
-    public double PresentViewTop    // the Name property
-    {
-      get => _presentViewTop;
-      set => _presentViewTop = value;
-    }
-
-    public EditViewLogic(ViewModels.NagCodeModel nagCodeModel, ListBox listSnippets)
-    {
-      SnipList = listSnippets;
+      SnipList = snipList;
       NagCodeModel = nagCodeModel;
     }
 
-    public EditViewLogic(ViewModels.NagCodeModel nagCodeModel)
+    public EditViewLogic(NagCodeViewModel nagCodeModel)
     {
       NagCodeModel = nagCodeModel;
     }
 
     internal void OpeningRequest()
     {
-      var editWindow = new Views.EditView(NagCodeModel);
+      var editWindow = new EditView(NagCodeModel);
       ShowEditView(editWindow);
     }
 
@@ -52,22 +39,21 @@
       double Width = Properties.Settings.Default.Width;
       double Height = Properties.Settings.Default.Height;
 
-
       editWindow.WindowStartupLocation = WindowStartupLocation.Manual;
       editWindow.Left = Left + Width;
       editWindow.Top = Top;
-      editWindow.Height= Height;
+      editWindow.Height = Height;
 
       editWindow.Show();
     }
 
-    internal void OpeningRequest(ISnip selectedSnippet, bool IsPresentView)
+    internal void OpeningRequest(ISnip selectedSnip, bool IsPresentView)
     {
       if (SnipList.SelectedIndex != -1)
       {
-        if (!selectedSnippet.IsSeperator)
+        if (!selectedSnip.IsSeperator)
         {
-          var editWindow = new Views.EditView((Snip)NagCodeModel.SelectedSnippet, NagCodeModel);
+          var editWindow = new EditView((Snip)NagCodeModel.SelectedSnip, NagCodeModel);
 
           if (IsPresentView)
           {
@@ -80,15 +66,15 @@
           {
             ShowEditView(editWindow);
           }
-       
-          editWindow.EditViewModel.SnippetToEdit.PropertyChanged += EditWindowChange;
+
+          editWindow.EditViewModel.SnipToEdit.PropertyChanged += EditWindowChange;
         }
       }
     }
 
     private void EditWindowChange(object sender, PropertyChangedEventArgs e)
     {
-      NagCodeModel.SelectedSnippet = (Snip)sender;
+      NagCodeModel.SelectedSnip = (Snip)sender;
       NagCodeModel.IsDirty = true;
     }
   }

@@ -8,10 +8,10 @@
   public class Seperator : ObservableRecipient, ISnip
   {
     private readonly string _theSeparator = " --------------------------------- ";
-    private Guid _uniqueGuid;
+    private Guid _guid;
     public Seperator()
     {
-      _uniqueGuid = Guid.NewGuid();
+      _guid = Guid.NewGuid();
     }
 
     public string Data
@@ -24,14 +24,14 @@
       get => true;
     }
 
-    public string Label
+    public string Name
     {
       get => _theSeparator;
     }
 
-    public Guid UniqueGuid
+    public Guid GuId
     {
-      get => _uniqueGuid;
+      get => _guid;
     }
 
     public TextDocument Document

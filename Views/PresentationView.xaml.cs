@@ -9,7 +9,7 @@
 
   public partial class PresentationView : Window
   {
-    public ViewModels.NagCodeModel NagCodeModel => DataContext as ViewModels.NagCodeModel;
+    public ViewModels.NagCodeViewModel NagCodeModel => DataContext as ViewModels.NagCodeViewModel;
 
     private DragDropManager dragDropManager = new DragDropManager();
     private BL.EditViewLogic ewl;
@@ -33,8 +33,8 @@
 
     private void DisableScrollbars()
     {
-      ListSnippets.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
-      ListSnippets.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
+      SnipList.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
+      SnipList.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
     }
 
     private void PresentWindowWindow_Closed(object sender, System.EventArgs e)
@@ -58,27 +58,27 @@
       Close();
     }
 
-    private void ListSnippets_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    private void SnipList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-      ewl = new BL.EditViewLogic(NagCodeModel, ListSnippets);
+      ewl = new BL.EditViewLogic(NagCodeModel, SnipList);
       ewl.PresentViewLeft = Left;
       ewl.PresentViewTop = Top;
-      ewl.OpeningRequest(NagCodeModel.SelectedSnippet, true);
+      ewl.OpeningRequest(NagCodeModel.SelectedSnip, true);
     }
 
-    private void ListSnippets_MouseMove(object sender, MouseEventArgs e)
+    private void SnipList_MouseMove(object sender, MouseEventArgs e)
     {
-      dragDropManager.MouseMove(sender, e, ListSnippets, NagCodeModel);
+      dragDropManager.MouseMove(sender, e, SnipList, NagCodeModel);
     }
 
-    private void ListSnippets_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void SnipList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      dragDropManager.SelectionChanged(sender, e, ListSnippets, NagCodeModel);
+      dragDropManager.SelectionChanged(SnipList, NagCodeModel);
     }
 
-    private void ListSnippets_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    private void SnipList_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
-      dragDropManager.PreviewMouseDown(sender, e, ListSnippets);
+      dragDropManager.PreviewMouseDown(sender, e, SnipList);
     }
 
   }

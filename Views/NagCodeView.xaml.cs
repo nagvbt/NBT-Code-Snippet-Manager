@@ -10,10 +10,10 @@
 
   public partial class NagCodeView : Window
   {
+
+    private DragDropManager _dragDropManager = new DragDropManager();
     public NagCodeViewModel NagCodeModel => DataContext as NagCodeViewModel;
     public ClipboardNotification SnippetLogic { get; set; }
-    private DragDropManager dragDropManager;
-
 
     public NagCodeView()
     {
@@ -28,9 +28,7 @@
 
       NagCodeModel.StartApp();
       SaveWindowLocation();
-      dragDropManager = new DragDropManager();
-
-    }
+     }
 
     private void SaveWindowLocation()
     {
@@ -77,29 +75,6 @@
       Show();
     }
 
-    private void SnipList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-      var ewl = new BL.EditViewLogic(NagCodeModel, SnipList);
-      ewl.OpeningRequest(NagCodeModel.SelectedSnip, false);
-    }
-
-    private void SnipList_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-      if (!NagCodeModel.IsInPresentMode)
-      {
-        if (e.Key == Key.Up)
-        {
-          NagCodeModel.MoveSnippetUpMethod();
-          e.Handled = true;
-        }
-        else if (e.Key == Key.Down)
-        {
-          NagCodeModel.MoveSnippetDownMethod();
-          e.Handled = true;
-        }
-      }
-    }
-
     public CheckBox TopmostCheckbox
     {
       get
@@ -127,19 +102,42 @@
       this.Topmost = false;
     }
 
+    private void SnipList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+      var ewl = new BL.EditViewLogic(NagCodeModel, SnipList);
+      ewl.OpeningRequest(NagCodeModel.SelectedSnip, false);
+    }
+
+    private void SnipList_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+      if (!NagCodeModel.IsInPresentMode)
+      {
+        if (e.Key == Key.Up)
+        {
+          NagCodeModel.MoveSnippetUpMethod();
+          e.Handled = true;
+        }
+        else if (e.Key == Key.Down)
+        {
+          NagCodeModel.MoveSnippetDownMethod();
+          e.Handled = true;
+        }
+      }
+    }
+
     private void SnipList_MouseMove(object sender, MouseEventArgs e)
     {
-      dragDropManager.MouseMove(sender, e, SnipList, NagCodeModel);  
+      _dragDropManager.MouseMove(sender, e, SnipList, NagCodeModel);  
     }
 
     private void SnipList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      dragDropManager.SelectionChanged(SnipList, NagCodeModel);  
+      _dragDropManager.SelectionChanged(SnipList, NagCodeModel);  
     }
 
     private void SnipList_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
-      dragDropManager.PreviewMouseDown(sender, e, SnipList);
+      _dragDropManager.PreviewMouseDown(sender, e, SnipList);
     }
 
     private void NagCodeView_Closed(object sender, EventArgs e)

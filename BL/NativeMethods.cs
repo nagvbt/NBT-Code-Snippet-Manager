@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace NagCode.BL.SnipLogic
+namespace NagCode.BL
 {
   internal static class NativeMethods
   {

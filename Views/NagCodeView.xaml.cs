@@ -1,7 +1,7 @@
 ﻿namespace NagCode.Views
 {
 
-  using NagCode.BL.SnipLogic;
+  using NagCode.BL;
   using NagCode.ViewModels;
   using System;
   using System.Windows;
@@ -10,13 +10,10 @@
 
   public partial class NagCodeView : Window
   {
-    public NageCodeModel NagCodeModel => DataContext as NageCodeModel;
+    public NagCodeModel NagCodeModel => DataContext as NagCodeModel;
     public ClipboardNotification SnippetLogic { get; set; }
+    private DragDropManager dragDropManager;
 
-    // Drag and Drop ---{
-    private Point dragStartPoint = new Point(0, 0);
-    private FrameworkElement draggingElement;
-    // Drag and Drop ---}
 
     public NagCodeView()
     {
@@ -30,6 +27,18 @@
       ToolTipService.BetweenShowDelayProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(0));
 
       NagCodeModel.StartApp();
+      SaveWindowLocation();
+      dragDropManager = new DragDropManager();
+
+    }
+
+    private void SaveWindowLocation()
+    {
+      Properties.Settings.Default.Top = Top;
+      Properties.Settings.Default.Left = Left;
+      Properties.Settings.Default.Height = Height;
+      Properties.Settings.Default.Width = Width;
+      Properties.Settings.Default.Save();
     }
 
     private void ClipboardUpdate(object sender, EventArgs e)
@@ -70,8 +79,8 @@
 
     private void ListSnippets_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-      var ewl = new Models.EditViewLogic(NagCodeModel, ListSnippets);
-      ewl.OpeningRequest(NagCodeModel.SelectedSnippet, Left, Top, Width, Height);
+      var ewl = new BL.EditViewLogic(NagCodeModel, ListSnippets);
+      ewl.OpeningRequest(NagCodeModel.SelectedSnippet, false);
     }
 
     private void ListSnippets_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -116,95 +125,34 @@
       this.Topmost = false;
     }
 
-    /// <summary>
-    /// Drag and Drop:
-    /// Called for every mouse move on the ListSnippets
-    /// If the mouse moves outside the MainWindow, start the drag
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void ListSnippets_MouseMove(object sender, MouseEventArgs e)
     {
-      if (e.LeftButton == MouseButtonState.Pressed)
-      {
-        e.Handled = true;
-        FrameworkElement currentElement = sender as FrameworkElement;
-        if (draggingElement != currentElement)
-        {
-          return;
-        }
-
-
-        // If the mouse moves outside the MainWindow, start the drag.
-        if (!(dragStartPoint.X == 0) || !(dragStartPoint.Y == 0))
-        {
-
-          Point currentPoint = e.GetPosition(ListSnippets);
-          if ((Math.Abs(dragStartPoint.X - currentPoint.X) > 2) && (Math.Abs(dragStartPoint.Y - currentPoint.Y) > 2))
-          {
-
-            if (ListSnippets.SelectedIndex == -1)
-            {
-              return;
-            }
-
-            object payload = NagCodeModel.SnippetList[ListSnippets.SelectedIndex].Data;
-
-            DataObject dataObject = new DataObject();
-            dataObject.SetData(payload);
-
-            Clipboard.SetDataObject(dataObject);
-
-            DragDropEffects dropEffect = DragDrop.DoDragDrop(draggingElement, dataObject, DragDropEffects.Copy | DragDropEffects.Move);
-            if (dropEffect != DragDropEffects.None)
-            {
-              if (ListSnippets.SelectedIndex < ListSnippets.Items.Count - 1)
-              {
-                ListSnippets.SelectedIndex++;
-              }
-            }
-          }
-        }
-
-      }
+      dragDropManager.MouseMove(sender, e, ListSnippets, NagCodeModel);  
     }
 
-    /// <summary>
-    /// Drag and Drop:
-    /// Called for every selection changed on ListSnippets
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void ListSnippets_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      if (ListSnippets.SelectedIndex == -1)
-      {
-        return;
-      }
-      object payload = NagCodeModel.SnippetList[ListSnippets.SelectedIndex].Data;
-
-      DataObject dataObject = new DataObject();
-      dataObject.SetData(payload);
-
-      Clipboard.SetDataObject(dataObject);
+      dragDropManager.SelectionChanged(sender, e, ListSnippets, NagCodeModel);  
     }
 
-    /// <summary>
-    /// Drag and Drop:
-    /// When Mouse Down on the ListItem(code Snippet) the dragStartPoint and draggingElement created
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void ListSnippets_PreviewMouseDown(object sender, MouseButtonEventArgs e)
     {
-      Size dragSize = new Size(20, 20);
-      dragStartPoint = e.GetPosition(ListSnippets);
-      draggingElement = sender as FrameworkElement;
+      dragDropManager.PreviewMouseDown(sender, e, ListSnippets);
     }
 
     private void NagCodeViewWindow_Closed(object sender, EventArgs e)
     {
       NagCodeModel.ExitMethod();
+    }
+
+    private void NagCodeViewWindow_LocationChanged(object sender, EventArgs e)
+    {
+      SaveWindowLocation();
+    }
+
+    private void NagCodeViewWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+      SaveWindowLocation();
     }
   }
 }

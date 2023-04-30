@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace NagCode.BL.SnipLogic
+namespace NagCode.BL
 {
   /// <summary>
   /// Hidden form to recieve the WM_CLIPBOARDUPDATE message.

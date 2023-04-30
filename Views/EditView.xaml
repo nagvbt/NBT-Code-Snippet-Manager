@@ -13,8 +13,8 @@
       <RowDefinition Height="19*"/>
       <RowDefinition Height="182*"/>
     </Grid.RowDefinitions>
-    <TextBox x:Name="TxtLabel" Height="23" Margin="10,10,9.6,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SnippetToEdit.Label, Mode=TwoWay}"/>
-    <TextBox x:Name="textBox" Margin="10,3.066,9.6,9.6" Grid.Row="1"  Text="{Binding SnippetToEdit.Data, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True"/>
+    <TextBox x:Name="txtLabel" Height="23" Margin="10,10,9.6,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding SnippetToEdit.Label, Mode=TwoWay}"/>
+    <TextBox x:Name="txtData" Margin="10,3.066,9.6,9.6" Grid.Row="1"  Text="{Binding SnippetToEdit.Data, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True"/>
 
   </Grid>
 </Window>

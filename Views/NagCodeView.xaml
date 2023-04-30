@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Name="NagCodeViewWindow"  Topmost="{Binding IsTopmost, Mode=TwoWay}" Cursor="Hand"
     DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
-    Title="NagCode" Height="500" Width="200" Closed="NagCodeViewWindow_Closed">
+    Title="NagCode" Height="500" Width="200" Closed="NagCodeViewWindow_Closed" LocationChanged="NagCodeViewWindow_LocationChanged" SizeChanged="NagCodeViewWindow_SizeChanged">
 
   <Grid>
      <Grid.RowDefinitions>

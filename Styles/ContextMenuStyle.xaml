@@ -4,6 +4,7 @@
 
   <ContextMenu x:Key="ContextMenuSnippetsList">
     <MenuItem Header="Insert From Clipboard" Command="{Binding InsertNewSnippet}" />
+    <MenuItem Header="Add Snip" Command="{Binding AddSnip}" />
     <MenuItem Header="Insert Separator" Command="{Binding InsertSeperator}" />
     <MenuItem Header="Delete" Command="{Binding DeleteSnippet}" />
     <MenuItem Header="Move Up (KeyUp)" Command="{Binding MoveSnippetUp}" />

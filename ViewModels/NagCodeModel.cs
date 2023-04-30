@@ -10,8 +10,9 @@
   using System.Linq;
   using System.Windows;
   using System.Windows.Controls;
+  using System.Windows.Media.Media3D;
 
-  public class NageCodeModel : ObservableRecipient
+  public class NagCodeModel : ObservableRecipient
   {
     private ObservableCollection<Interfaces.ISnip> snippetList = new ObservableCollection<Interfaces.ISnip>();
     private int SnippetCounter = 1;
@@ -19,7 +20,7 @@
     private ContextMenu _mainMenu;
     private bool _isTopmost = true;
 
-    public NageCodeModel()
+    public NagCodeModel()
     {
       SnippetList = new ObservableCollection<Interfaces.ISnip>();
 
@@ -31,11 +32,13 @@
       MoveSnippetUp = new RelayCommand(MoveSnippetUpMethod);
       MoveSnippetDown = new RelayCommand(MoveSnippetDownMethod);
       InsertSeperator = new RelayCommand(InsertSeperatorMethod);
+      AddSnip = new RelayCommand(AddSnipMethod);
       Exit = new RelayCommand(ExitMethod);
     }
 
     public RelayCommand Exit { get; set; }
     public RelayCommand InsertSeperator { get; set; }
+    public RelayCommand AddSnip { get; set; }
     public RelayCommand MoveSnippetDown { get; set; }
     public RelayCommand MoveSnippetUp { get; set; }
     public RelayCommand DeleteSnippet { get; set; }
@@ -151,6 +154,7 @@
     {
       SnippetList.Add(new Models.Snip(SnippetCounter, label, data));
       SnippetCounter++;
+      FixIds();
       OnPropertyChanged(nameof(SnippetList));
     }
 
@@ -161,6 +165,13 @@
       SnippetList.Add(new Models.Seperator());
       SnippetCounter = 1;
       OnPropertyChanged(nameof(SnippetList));
+    }
+
+
+    internal void AddSnipMethod()
+    {
+      var ewl = new BL.EditViewLogic(this);
+      ewl.OpeningRequest();
     }
 
     internal void Clear()
@@ -297,6 +308,7 @@
     public void StartApp()
     {
       string filename = Properties.Settings.Default.snipFilePath;
+
       if (filename != "")
       {
         ReadSnipFile(filename);

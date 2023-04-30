@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NagCode.BL.SnipLogic
+namespace NagCode.BL
 {
   public sealed class ClipboardNotification
   {

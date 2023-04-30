@@ -1,6 +1,6 @@
 ﻿namespace NagCode.Views
 {
-  using MahApps.Metro.Controls;
+
   using NagCode.BL.SnipLogic;
   using NagCode.ViewModels;
   using System;
@@ -8,7 +8,7 @@
   using System.Windows.Controls;
   using System.Windows.Input;
 
-  public partial class NagCodeView : MetroWindow
+  public partial class NagCodeView : Window
   {
     public NageCodeModel NagCodeModel => DataContext as NageCodeModel;
     public ClipboardNotification SnippetLogic { get; set; }
@@ -89,6 +89,31 @@
           e.Handled = true;
         }
       }
+    }
+
+    public CheckBox TopmostCheckbox
+    {
+      get
+      {
+        return MyTopmostCheckBox;
+      }
+    }
+    private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+    {
+      Left += e.HorizontalChange;
+      Top += e.VerticalChange;
+    }
+
+    private void MyTopmostCheckBox_Checked(object sender, RoutedEventArgs e)
+    {
+      NagCodeModel.IsTopmost = true;
+      this.Topmost = true;
+    }
+
+    private void MyTopmostCheckBox_Unchecked(object sender, RoutedEventArgs e)
+    {
+      NagCodeModel.IsTopmost = false;
+      this.Topmost = false;
     }
 
     /// <summary>

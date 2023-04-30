@@ -1,25 +1,22 @@
-﻿<Controls:MetroWindow x:Class="NagCode.Views.NagCodeView"
+﻿<Window x:Class="NagCode.Views.NagCodeView" WindowStyle="None"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Nag Code" Height="472.6" MinWidth="13" MaxWidth="177" Width="177" TextOptions.TextFormattingMode="Display"
-    Icon="../favicon.ico" ShowIconOnTitleBar="False" ShowCloseButton="true" ShowMinButton="true" ShowMaxRestoreButton="false"
-    xmlns:local="using:NagCode"
-    WindowTitleBrush="#800080"
+    Name="NagCodeViewWindow"  Topmost="{Binding IsTopmost, Mode=TwoWay}" Cursor="Hand"
     DataContext="{Binding Source={StaticResource Locator}, Path=MainViewModel}"
-    Name="NagCodeViewWindow" Topmost="{Binding IsTopmost, Mode=TwoWay}" Cursor="Hand" Foreground="#FFA59C9C" Closed="NagCodeViewWindow_Closed">
+    Title="NagCode" Height="500" Width="200" Closed="NagCodeViewWindow_Closed">
 
   <Grid>
-    <Grid.RowDefinitions>
+     <Grid.RowDefinitions>
       <RowDefinition Height="293*"/>
-      <RowDefinition Height="33"/>
+      <RowDefinition Height="60"/>
     </Grid.RowDefinitions>
     <Grid Grid.Row="0">
       <ListBox x:Name="ListSnippets" HorizontalContentAlignment="Stretch" SelectionMode="Single"
-                  FontSize="12" ItemsSource="{Binding SnippetList, Mode=OneWay}" 
-                     MouseDoubleClick="ListSnippets_MouseDoubleClick" PreviewKeyDown="ListSnippets_PreviewKeyDown"
-                     SelectedItem="{Binding SelectedSnippet, Mode=TwoWay}"
-                     ContextMenu="{StaticResource ContextMenuSnippetsList}" MouseMove="ListSnippets_MouseMove" SelectionChanged="ListSnippets_SelectionChanged" PreviewMouseDown="ListSnippets_PreviewMouseDown">
+         ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+         FontSize="12" ItemsSource="{Binding SnippetList, Mode=OneWay}" 
+         MouseDoubleClick="ListSnippets_MouseDoubleClick" PreviewKeyDown="ListSnippets_PreviewKeyDown"
+         SelectedItem="{Binding SelectedSnippet, Mode=TwoWay}"
+         ContextMenu="{StaticResource ContextMenuSnippetsList}" MouseMove="ListSnippets_MouseMove" SelectionChanged="ListSnippets_SelectionChanged" PreviewMouseDown="ListSnippets_PreviewMouseDown">
 
         <ListBox.ItemTemplate>
           <DataTemplate>
@@ -40,14 +37,23 @@
         </ListBox.ItemTemplate>
       </ListBox>
     </Grid>
-    <Grid Grid.Row="1" Name="ButtonBar">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition/>
-        <ColumnDefinition/>
-      </Grid.ColumnDefinitions>
-      <Button x:Name="Menu" Content="Menu" Command="{Binding OpenMenu}" Grid.Column="0" Margin="7,-5,3,5"/>
-      <Button Content="Present" Click="PresentButton_Click" Grid.Column="1" Margin="10,-5,8,5" />
+
+    <Grid Grid.Row="1" Name="ButtonBar" Background="#FF1D1B1B">
+      <Thumb Opacity=".001" Grid.Row="1" Grid.RowSpan="2" DragDelta="Thumb_DragDelta" Background="#FF2F2828">
+      </Thumb>
+      <CheckBox  IsChecked="True" 
+                   HorizontalAlignment="Center" Width="70" x:Name="MyTopmostCheckBox" 
+                   Checked="MyTopmostCheckBox_Checked" Unchecked="MyTopmostCheckBox_Unchecked" VerticalAlignment="Top" Margin="0,5,0,0" Foreground="White">topmost</CheckBox>
+
+      <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center"  >
+        <Button Width="72" x:Name="Menu" Command="{Binding OpenMenu}" Height="28" Margin="0,-1,0,1" VerticalAlignment="Bottom">
+          <!--<Image Source="../favicon.ico"></Image>-->
+          Menu
+        </Button>
+        
+        <Button Width="64" Margin="10,-1,0,1" Content="Present" Click="PresentButton_Click" Height="28" VerticalAlignment="Bottom"/>
+      </StackPanel>
     </Grid>
   </Grid>
-</Controls:MetroWindow>
+</Window>
     

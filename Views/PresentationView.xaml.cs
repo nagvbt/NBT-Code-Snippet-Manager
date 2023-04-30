@@ -1,12 +1,11 @@
 ﻿namespace NagCode.Views
 {
-  using MahApps.Metro.Controls;
   using System;
   using System.Windows;
   using System.Windows.Controls;
   using System.Windows.Input;
 
-  public partial class PresentationView : MetroWindow
+  public partial class PresentationView : Window
   {
     public ViewModels.NageCodeModel NageCodeModel => DataContext as ViewModels.NageCodeModel;
 

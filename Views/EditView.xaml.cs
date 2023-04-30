@@ -8,16 +8,17 @@
   {
     public ViewModels.EditViewModel EditViewModel => DataContext as ViewModels.EditViewModel;
     public ViewModels.NagCodeModel _nagCodeModel;
+    private bool _isEditing = false;
 
     /// <summary>
-    /// Invoked when Edit the Existing Snip
+    /// EDIT: Invoked when Edit the Existing Snip
     /// </summary>
     /// <param name="snippetToEdit"></param>
     /// <param name="nagCodeModel"></param>
     public EditView(Models.Snip snippetToEdit, ViewModels.NagCodeModel nagCodeModel)
     {
       InitializeComponent();
-
+      _isEditing = true;
       Title = "Edit Snip";
       txtLabel.Text = snippetToEdit.Label;
       txtData.Text = snippetToEdit.Data;
@@ -27,13 +28,13 @@
     }
 
     /// <summary>
-    /// Invoked for Adding New Snip
+    /// ADD: Invoked for Adding New Snip
     /// </summary>
     /// <param name="nagCodeModel"></param>
     public EditView(ViewModels.NagCodeModel nagCodeModel)
     {
       InitializeComponent();
-
+      _isEditing= false;
       Title = "New Snip";
       _nagCodeModel = nagCodeModel;
     }
@@ -51,7 +52,7 @@
 
     private void Submit_Click(object sender, RoutedEventArgs e)
     {
-      if (_nagCodeModel != null)
+      if (!_isEditing)
       {
         // Add new snip
         _nagCodeModel.Add(txtLabel.Text, txtData.Text);

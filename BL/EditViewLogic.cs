@@ -7,7 +7,6 @@
   using System.ComponentModel;
   using System.Windows;
   using System.Windows.Controls;
-  using System.Windows.Media.Media3D;
 
   public class EditViewLogic
   {
@@ -42,13 +41,8 @@
 
     internal void OpeningRequest()
     {
-
       var editWindow = new Views.EditView(NagCodeModel);
-
       ShowEditView(editWindow);
-
-      //editWindow.EditViewModel.SnippetToEdit.PropertyChanged += EditWindowChange;
-
     }
 
     private static void ShowEditView(EditView editWindow)
@@ -56,11 +50,13 @@
       double Top = Properties.Settings.Default.Top;
       double Left = Properties.Settings.Default.Left;
       double Width = Properties.Settings.Default.Width;
+      double Height = Properties.Settings.Default.Height;
+
 
       editWindow.WindowStartupLocation = WindowStartupLocation.Manual;
       editWindow.Left = Left + Width;
-      // editWindow.Top = Top + (Height - editWindow.Height) / 2
       editWindow.Top = Top;
+      editWindow.Height= Height;
 
       editWindow.Show();
     }

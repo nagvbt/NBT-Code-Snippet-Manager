@@ -19,7 +19,6 @@
       InitializeComponent();
       SetViewDimentions();
       DisableScrollbars();
-    //  dragDropManager = new DragDropManager();
     }
 
     private void SetViewDimentions()
@@ -81,9 +80,6 @@
     {
       dragDropManager.PreviewMouseDown(sender, e, ListSnippets);
     }
-
-
-
 
   }
 }

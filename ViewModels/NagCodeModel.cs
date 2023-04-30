@@ -209,11 +209,11 @@
       _mainMenu = new ContextMenu();
       _mainMenu.Width = 200;
 
-      var mainMenuItemAlwaysOntop = new MenuItem { Header = "Topmost" };
-      mainMenuItemAlwaysOntop.IsCheckable = true;
-      mainMenuItemAlwaysOntop.IsChecked = true;
-      mainMenuItemAlwaysOntop.Click += ItemAlwaysOnTopClick;
-      _mainMenu.Items.Add(mainMenuItemAlwaysOntop);
+      //var mainMenuItemAlwaysOntop = new MenuItem { Header = "Topmost" };
+      //mainMenuItemAlwaysOntop.IsCheckable = true;
+      //mainMenuItemAlwaysOntop.IsChecked = true;
+      //mainMenuItemAlwaysOntop.Click += ItemAlwaysOnTopClick;
+      //_mainMenu.Items.Add(mainMenuItemAlwaysOntop);
 
       var mainMenuItemActAsClipboardManager = new MenuItem { Header = "Clipboard Manager" };
       mainMenuItemActAsClipboardManager.IsCheckable = true;
@@ -221,9 +221,9 @@
       mainMenuItemActAsClipboardManager.Click += ItemActAsClipboardManagerClick;
       _mainMenu.Items.Add(mainMenuItemActAsClipboardManager);
 
-      var itemSave = new MenuItem { Header = "Save" };
-      itemSave.Click += new RoutedEventHandler(ItemSaveClick);
-      _mainMenu.Items.Add(itemSave);
+      //var itemSave = new MenuItem { Header = "Save" };
+      //itemSave.Click += new RoutedEventHandler(ItemSaveClick);
+      //_mainMenu.Items.Add(itemSave);
 
       var itemLoad = new MenuItem { Header = "Load" };
       itemLoad.Click += new RoutedEventHandler(ItemLoadClick);
@@ -240,10 +240,10 @@
       _mainMenu.IsOpen = false;
     }
 
-    void ItemSaveClick(object sender, RoutedEventArgs e)
-    {
-      Export();
-    }
+    //void ItemSaveClick(object sender, RoutedEventArgs e)
+    //{
+    //  Export();
+    //}
 
     public void Export()
     {

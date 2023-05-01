@@ -4,8 +4,7 @@
       <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" xmlns:vm="clr-namespace:NagCode.ViewModels" />
 
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Styles/CheckBoxStyle.xaml" x:Shared="True"/>
-        <ResourceDictionary Source="Styles/ButtonStyle.xaml" x:Shared="True"/>
+     
         <ResourceDictionary Source="Styles/ContextMenuStyle.xaml" x:Shared="True"/>
         <ResourceDictionary Source="Styles/TooltipStyle.xaml" x:Shared="True"/>
       </ResourceDictionary.MergedDictionaries>

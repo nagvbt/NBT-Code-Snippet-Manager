@@ -2,6 +2,7 @@
 {
   using CommunityToolkit.Mvvm.ComponentModel;
   using CommunityToolkit.Mvvm.Input;
+  using NagCode.Views;
   using Newtonsoft.Json;
   using System;
   using System.Collections.ObjectModel;
@@ -232,17 +233,28 @@
       itemNew.Click += new RoutedEventHandler(ItemNewClick);
       _mainMenu.Items.Add(itemNew);
 
-      var itemExit = new MenuItem { Header = "Exit" };
-      itemExit.Click += new RoutedEventHandler(ExitItemClick);
+      var itemExit = new MenuItem { Header = "About" };
+      itemExit.Click += new RoutedEventHandler(AboutItemClick);
       _mainMenu.Items.Add(itemExit);
 
       _mainMenu.IsOpen = false;
     }
 
-    //void ItemSaveClick(object sender, RoutedEventArgs e)
-    //{
-    //  Export();
-    //}
+    void AboutItemClick(object sender, RoutedEventArgs e)
+    {
+      About about = new About();
+
+      double Top = Properties.Settings.Default.Top;
+      double Left = Properties.Settings.Default.Left;
+      double Width = Properties.Settings.Default.Width;
+      double Height = Properties.Settings.Default.Height;
+
+      about.WindowStartupLocation = WindowStartupLocation.Manual;
+      about.Left = Left + Width;
+      about.Top = Top;
+      
+      about.Show();
+    }
 
     public void Export()
     {

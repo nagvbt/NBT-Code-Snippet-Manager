@@ -3,13 +3,37 @@
                     xmlns:local="clr-namespace:NagCode">
 
   <ContextMenu x:Key="ContextMenuSnippetsList">
-    <MenuItem Header="Insert From Clipboard" Command="{Binding InsertNewSnippet}" />
-    <MenuItem Header="Add Snip" Command="{Binding AddSnip}" />
+    <MenuItem Header="Insert From Clipboard" Command="{Binding InsertNewSnippet}" >
+    <MenuItem.Icon>
+      <Image Source="../assets/insert.png" ></Image>
+    </MenuItem.Icon>
+    </MenuItem>
+    <MenuItem Header="Add Snip" Command="{Binding AddSnip}" >
+      <MenuItem.Icon>
+        <Image Source="../assets/add-snip.png" ></Image>
+      </MenuItem.Icon>
+    </MenuItem>
     <MenuItem Header="Insert Separator" Command="{Binding InsertSeperator}" />
-    <MenuItem Header="Delete" Command="{Binding DeleteSnippet}" />
-    <MenuItem Header="Move Up (KeyUp)" Command="{Binding MoveSnippetUp}" />
-    <MenuItem Header="Move Down (KeyDown)" Command="{Binding MoveSnippetDown}" />
-    <MenuItem Header="Exit" Command="{Binding Exit}" />
+    <MenuItem Header="Delete" Command="{Binding DeleteSnippet}" >
+    <MenuItem.Icon>
+      <Image Source="../assets/remove.png" ></Image>
+    </MenuItem.Icon>
+    </MenuItem>
+    <MenuItem Header="Move Up" Command="{Binding MoveSnippetUp}">
+    <MenuItem.Icon>
+      <Image Source="../assets/up.png" ></Image>
+    </MenuItem.Icon>
+    </MenuItem>
+    <MenuItem Header="Move Down" Command="{Binding MoveSnippetDown}">
+    <MenuItem.Icon>
+      <Image Source="../assets/down.png" ></Image>
+    </MenuItem.Icon>
+    </MenuItem>
+    <MenuItem Header="Exit" Command="{Binding Exit}" >
+    <MenuItem.Icon>
+      <Image Source="../assets/close.png" ></Image>
+    </MenuItem.Icon>
+    </MenuItem>
   </ContextMenu>
 
 </ResourceDictionary>

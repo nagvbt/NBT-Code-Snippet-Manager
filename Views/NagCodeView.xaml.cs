@@ -70,6 +70,11 @@
       Hide();
     }
 
+    private void CloseButton_Click(object sender, RoutedEventArgs e)
+    {
+      NagCodeModel.ExitMethod();
+    }
+
     private void PresentWindowClosedAction(object sender, EventArgs e)
     {
       Show();

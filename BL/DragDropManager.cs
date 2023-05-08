@@ -9,7 +9,7 @@ namespace NagCode.BL
   public class DragDropManager
     {
  
-    private Point _dragStartPoint = new Point(0, 0);
+    private Point _startPoint = new Point(0, 0);
     private FrameworkElement _draggingElement;
     public NagCodeViewModel NagCodeModel;
 
@@ -30,11 +30,11 @@ namespace NagCode.BL
         }
 
         // If the mouse moves outside the MainWindow, start the drag.
-        if (!(_dragStartPoint.X == 0) || !(_dragStartPoint.Y == 0))
+        if (!(_startPoint.X == 0) || !(_startPoint.Y == 0))
         {
 
           Point currentPoint = e.GetPosition(snipList);
-          if ((Math.Abs(_dragStartPoint.X - currentPoint.X) > 2) && (Math.Abs(_dragStartPoint.Y - currentPoint.Y) > 2))
+          if ((Math.Abs(_startPoint.X - currentPoint.X) > 2) && (Math.Abs(_startPoint.Y - currentPoint.Y) > 2))
           {
 
             if (snipList.SelectedIndex == -1)
@@ -87,7 +87,7 @@ namespace NagCode.BL
     /// </summary>
     public void PreviewMouseDown(object sender, MouseButtonEventArgs e, ListBox snipList)
     {
-      _dragStartPoint = e.GetPosition(snipList);
+      _startPoint = e.GetPosition(snipList);
       _draggingElement = sender as FrameworkElement;
     }
   }

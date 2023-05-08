@@ -12,7 +12,7 @@
     public ViewModels.NagCodeViewModel NagCodeModel => DataContext as ViewModels.NagCodeViewModel;
 
     private DragDropManager _dragDropManager = new DragDropManager();
-    private BL.EditViewLogic _editViewLogic;
+    private EditViewLogic _editViewLogic;
 
     public PresentationView()
     {
@@ -37,33 +37,48 @@
       SnipList.SetValue(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled);
     }
 
-    private void PresentWindowWindow_Closed(object sender, System.EventArgs e)
-    {
-      NagCodeModel.IsInPresentMode = false;
-    }
 
-    private void MoveButton(object sender, RoutedEventArgs e)
+    private void SetEditViewPosition()
     {
-      Left = (Left == 0) ? (SystemParameters.PrimaryScreenWidth - Width) : 0;
-      if (_editViewLogic!=null)
+      if (_editViewLogic == null)
       {
-        _editViewLogic.PresentViewLeft = Left;
-        _editViewLogic.PresentViewTop = Top;
+        return;
       }
-
+      _editViewLogic.PresentViewLeft = Left;
+      _editViewLogic.PresentViewTop = Top;
     }
 
-    private void CloseButton(object sender, RoutedEventArgs e)
+    private void OpenEditView()
+    {
+      _editViewLogic = new EditViewLogic(NagCodeModel, SnipList);
+      SetEditViewPosition();
+      _editViewLogic.OpeningRequest(NagCodeModel.SelectedSnip, true);
+    }
+
+    #region view-handlers
+    private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
       Close();
     }
 
     private void SnipList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-      _editViewLogic = new BL.EditViewLogic(NagCodeModel, SnipList);
-      _editViewLogic.PresentViewLeft = Left;
-      _editViewLogic.PresentViewTop = Top;
-      _editViewLogic.OpeningRequest(NagCodeModel.SelectedSnip, true);
+      OpenEditView();
+    }
+    private void PresentWindowWindow_Closed(object sender, System.EventArgs e)
+    {
+      NagCodeModel.IsInPresentMode = false;
+    }
+
+    private void MoveButton_Click(object sender, RoutedEventArgs e)
+    {
+      MoveViewLeftOrRightToScreen();
+    }
+
+    private void MoveViewLeftOrRightToScreen()
+    {
+      Left = (Left == 0) ? (SystemParameters.PrimaryScreenWidth - Width) : 0;
+      SetEditViewPosition();
     }
 
     private void SnipList_MouseMove(object sender, MouseEventArgs e)
@@ -80,6 +95,7 @@
     {
       _dragDropManager.PreviewMouseDown(sender, e, SnipList);
     }
+    #endregion
 
   }
 }

@@ -76,6 +76,7 @@
     {
       NagCodeModel.SelectedSnip = (Snip)sender;
       NagCodeModel.IsDirty = true;
+
     }
   }
 }

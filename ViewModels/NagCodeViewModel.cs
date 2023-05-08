@@ -19,6 +19,18 @@
     private Interfaces.ISnip _selectedSnip;
     private ContextMenu _mainMenu;
     private bool _isTopmost = true;
+    public bool IsInPresentMode { get; set; }
+    public bool IsClipboardManager { get; set; }
+    public bool IsDirty { get; set; }
+    public RelayCommand Exit { get; set; }
+    public RelayCommand InsertSeperator { get; set; }
+    public RelayCommand AddSnip { get; set; }
+    public RelayCommand MoveSnippetDown { get; set; }
+    public RelayCommand MoveSnippetUp { get; set; }
+    public RelayCommand DeleteSnippet { get; set; }
+    public RelayCommand<bool> InsertNewSnippet { get; set; }
+    public RelayCommand OpenMenu { get; private set; }
+
 
     public NagCodeViewModel()
     {
@@ -36,18 +48,7 @@
       Exit = new RelayCommand(ExitMethod);
     }
 
-    public RelayCommand Exit { get; set; }
-    public RelayCommand InsertSeperator { get; set; }
-    public RelayCommand AddSnip { get; set; }
-    public RelayCommand MoveSnippetDown { get; set; }
-    public RelayCommand MoveSnippetUp { get; set; }
-    public RelayCommand DeleteSnippet { get; set; }
-    public RelayCommand<bool> InsertNewSnippet { get; set; }
-    public RelayCommand OpenMenu { get; private set; }
-    public bool IsInPresentMode { get; set; }
-    public bool IsClipboardManager { get; set; }
-    public bool IsDirty { get; set; }
-
+      
     public bool IsTopmost
     {
       get => _isTopmost;
@@ -80,7 +81,7 @@
       set => _snipList = value;
     }
 
-    private void OpenMenuMethod()
+    public void OpenMenuMethod()
     {
       _mainMenu.IsOpen = true;
     }
@@ -152,11 +153,13 @@
 
     public void OnPropertyChanged()
     {
+      IsDirty = true;
       OnPropertyChanged(nameof(SnipList));
     }
 
     internal void Add(string name, string data)
     {
+      IsDirty = true;
       SnipList.Add(new Models.Snip(_snipCounter, name, data));
       _snipCounter++;
       FixIds();
@@ -171,7 +174,6 @@
       _snipCounter = 1;
       OnPropertyChanged(nameof(SnipList));
     }
-
 
     internal void AddSnipMethod()
     {
@@ -209,21 +211,11 @@
       _mainMenu = new ContextMenu();
       _mainMenu.Width = 200;
 
-      //var mainMenuItemAlwaysOntop = new MenuItem { Header = "Topmost" };
-      //mainMenuItemAlwaysOntop.IsCheckable = true;
-      //mainMenuItemAlwaysOntop.IsChecked = true;
-      //mainMenuItemAlwaysOntop.Click += ItemAlwaysOnTopClick;
-      //_mainMenu.Items.Add(mainMenuItemAlwaysOntop);
-
       var mainMenuItemActAsClipboardManager = new MenuItem { Header = "Clipboard Manager" };
       mainMenuItemActAsClipboardManager.IsCheckable = true;
       mainMenuItemActAsClipboardManager.IsChecked = IsClipboardManager;
       mainMenuItemActAsClipboardManager.Click += ItemActAsClipboardManagerClick;
       _mainMenu.Items.Add(mainMenuItemActAsClipboardManager);
-
-      //var itemSave = new MenuItem { Header = "Save" };
-      //itemSave.Click += new RoutedEventHandler(ItemSaveClick);
-      //_mainMenu.Items.Add(itemSave);
 
       var itemLoad = new MenuItem { Header = "Load" };
       itemLoad.Click += new RoutedEventHandler(ItemLoadClick);
@@ -247,8 +239,7 @@
       double Top = Properties.Settings.Default.Top;
       double Left = Properties.Settings.Default.Left;
       double Width = Properties.Settings.Default.Width;
-      double Height = Properties.Settings.Default.Height;
-
+      
       about.WindowStartupLocation = WindowStartupLocation.Manual;
       about.Left = Left + Width;
       about.Top = Top;
@@ -326,7 +317,7 @@
       }
     }
 
-    public void StartApp()
+    public void ReadSnipFileUsingFilepathSetting()
     {
       string filename = Properties.Settings.Default.snipFilePath;
 

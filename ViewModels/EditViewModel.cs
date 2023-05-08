@@ -13,7 +13,7 @@ namespace NagCode.ViewModels
       set
       {
         _snipToEdit = value;
-        OnPropertyChanged();
+        OnPropertyChanged(nameof(_snipToEdit));
       }
     }
   }

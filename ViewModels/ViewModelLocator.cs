@@ -7,7 +7,6 @@
     {
         static ViewModelLocator()
         {
-
             Ioc.Default.ConfigureServices(
               new ServiceCollection()
               .AddSingleton<NagCodeViewModel>()

@@ -48,12 +48,13 @@
               <ImageBrush ImageSource="../assets/menu.png" Stretch="Uniform"/>
             </Button.Background>
           </Button>
-          <Label Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11">Menu</Label>
+          <Label x:Name="MenuLabel"  Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="MenuLabel_MouseDown">Menu</Label>
         </StackPanel>
+        
         <StackPanel>
           <CheckBox  IsChecked="True"  x:Name="MyTopmostCheckBox" 
                    Checked="MyTopmostCheckBox_Checked" Unchecked="MyTopmostCheckBox_Unchecked" Foreground="Black"  Width="34" Height="29" HorizontalAlignment="Right"/>
-          <Label Height="25" Width="52" Margin="0,-19,0,0" HorizontalAlignment="Center" FontSize="11" Content="Topmost"/>
+          <Label x:Name="TopmostLabel" Height="25" Width="52" Margin="0,-19,0,0" HorizontalAlignment="Center" FontSize="11" Content="Topmost" />
         </StackPanel>
         <StackPanel >
           <Button x:Name="Close" Click="CloseButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8">
@@ -61,7 +62,7 @@
               <ImageBrush ImageSource="../assets/close.png" Stretch="Uniform"/>
             </Button.Background>
           </Button>
-          <Label Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11">Close</Label>
+          <Label x:Name="CloseLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="CloseLabel_MouseDown">Close</Label>
         </StackPanel>
     
       
@@ -71,7 +72,7 @@
               <ImageBrush ImageSource="../assets/present.png" Stretch="Uniform"/>
             </Button.Background>
           </Button>
-          <Label Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11">Present</Label>
+          <Label x:Name="PresentLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="PresentLabel_MouseDown">Present</Label>
         </StackPanel>
       </StackPanel>
     </Grid>

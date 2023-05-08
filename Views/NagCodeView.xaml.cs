@@ -18,19 +18,30 @@
     public NagCodeView()
     {
       InitializeComponent();
+      SaveWindowLocationInSettings();
+      ListenToClipboard();
+      TooltipInitialize();
+      InitializeApp();
+    }
 
-      //listen to clipboard
-      ClipboardNotification.ClipboardUpdate += ClipboardUpdate;
-
+    private static void TooltipInitialize()
+    {
       ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
       ToolTipService.InitialShowDelayProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(0));
       ToolTipService.BetweenShowDelayProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(0));
+    }
 
-      NagCodeModel.StartApp();
-      SaveWindowLocation();
-     }
+    private void ListenToClipboard()
+    {
+      ClipboardNotification.ClipboardUpdate += ClipboardUpdate;
+    }
 
-    private void SaveWindowLocation()
+    private void InitializeApp()
+    {
+      NagCodeModel.ReadSnipFileUsingFilepathSetting();
+    }
+
+    private void SaveWindowLocationInSettings()
     {
       Properties.Settings.Default.Top = Top;
       Properties.Settings.Default.Left = Left;
@@ -54,12 +65,12 @@
       Application.Current.Exit += ApplicationExit;
     }
 
-    void ApplicationExit(object sender, ExitEventArgs e)
+    private void ApplicationExit(object sender, ExitEventArgs e)
     {
       NagCodeModel.ExitMethod();
     }
 
-    private void PresentButton_Click(object sender, RoutedEventArgs e)
+    private void LaunchPresentView()
     {
       NagCodeModel.IsInPresentMode = true;
       NagCodeModel.IsClipboardManager = false;
@@ -70,7 +81,86 @@
       Hide();
     }
 
+    public CheckBox TopmostCheckbox
+    {
+      get
+      {
+        return MyTopmostCheckBox;
+      }
+    }
+
+    private void ToggleTopmost(bool isTopmost)
+    {
+      if (NagCodeModel != null)
+      {
+        NagCodeModel.IsTopmost = isTopmost;
+      }
+      Topmost = isTopmost;
+    }
+
+    private void OpenEditView()
+    {
+      EditViewLogic editViewLogic = new EditViewLogic(NagCodeModel, SnipList);
+      editViewLogic.OpeningRequest(NagCodeModel.SelectedSnip, false);
+    }
+
+    private void MoveSnipUpDown(KeyEventArgs e)
+    {
+      if (NagCodeModel.IsInPresentMode)
+      {
+        return;
+      }
+      if (e.Key == Key.Up)
+      {
+        NagCodeModel.MoveSnippetUpMethod();       
+      }
+      else if (e.Key == Key.Down)
+      {
+        NagCodeModel.MoveSnippetDownMethod();       
+      }
+      e.Handled = true;
+    }
+
+
+    #region view-handlers
+
+    private void NagCodeView_Closed(object sender, EventArgs e)
+    {
+      NagCodeModel.ExitMethod();
+    }
+
+    private void NagCodeView_LocationChanged(object sender, EventArgs e)
+    {
+      SaveWindowLocationInSettings();
+    }
+
+    private void NagCodeView_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+      SaveWindowLocationInSettings();
+    }
+
+    private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+    {
+      Left += e.HorizontalChange;
+      Top += e.VerticalChange;
+    }
+
+    private void PresentButton_Click(object sender, RoutedEventArgs e)
+    {
+      LaunchPresentView();
+    }
+
+    private void PresentLabel_MouseDown(object sender, MouseButtonEventArgs e)
+    {
+      LaunchPresentView();
+    }
+
     private void CloseButton_Click(object sender, RoutedEventArgs e)
+    {
+      NagCodeModel.ExitMethod();
+    }
+
+    private void CloseLabel_MouseDown(object sender, MouseButtonEventArgs e)
     {
       NagCodeModel.ExitMethod();
     }
@@ -80,64 +170,34 @@
       Show();
     }
 
-    public CheckBox TopmostCheckbox
-    {
-      get
-      {
-        return MyTopmostCheckBox;
-      }
-    }
-    private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
-    {
-      Left += e.HorizontalChange;
-      Top += e.VerticalChange;
-    }
-
     private void MyTopmostCheckBox_Checked(object sender, RoutedEventArgs e)
     {
-      if(NagCodeModel!=null)
-        NagCodeModel.IsTopmost = true;
-      this.Topmost = true;
+      ToggleTopmost(true);
     }
 
     private void MyTopmostCheckBox_Unchecked(object sender, RoutedEventArgs e)
     {
-      if (NagCodeModel != null)
-        NagCodeModel.IsTopmost = false;
-      this.Topmost = false;
+      ToggleTopmost(false);
     }
 
     private void SnipList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-      var ewl = new BL.EditViewLogic(NagCodeModel, SnipList);
-      ewl.OpeningRequest(NagCodeModel.SelectedSnip, false);
+      OpenEditView();
     }
 
     private void SnipList_PreviewKeyDown(object sender, KeyEventArgs e)
     {
-      if (!NagCodeModel.IsInPresentMode)
-      {
-        if (e.Key == Key.Up)
-        {
-          NagCodeModel.MoveSnippetUpMethod();
-          e.Handled = true;
-        }
-        else if (e.Key == Key.Down)
-        {
-          NagCodeModel.MoveSnippetDownMethod();
-          e.Handled = true;
-        }
-      }
+      MoveSnipUpDown(e);
     }
 
     private void SnipList_MouseMove(object sender, MouseEventArgs e)
     {
-      _dragDropManager.MouseMove(sender, e, SnipList, NagCodeModel);  
+      _dragDropManager.MouseMove(sender, e, SnipList, NagCodeModel);
     }
 
     private void SnipList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      _dragDropManager.SelectionChanged(SnipList, NagCodeModel);  
+      _dragDropManager.SelectionChanged(SnipList, NagCodeModel);
     }
 
     private void SnipList_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -145,19 +205,12 @@
       _dragDropManager.PreviewMouseDown(sender, e, SnipList);
     }
 
-    private void NagCodeView_Closed(object sender, EventArgs e)
+    private void MenuLabel_MouseDown(object sender, MouseButtonEventArgs e)
     {
-      NagCodeModel.ExitMethod();
+      NagCodeModel.OpenMenuMethod();
     }
+    #endregion // ui-handlers
 
-    private void NagCodeView_LocationChanged(object sender, EventArgs e)
-    {
-      SaveWindowLocation();
-    }
 
-    private void NagCodeView_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-      SaveWindowLocation();
-    }
   }
 }

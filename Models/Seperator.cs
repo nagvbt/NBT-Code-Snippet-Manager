@@ -7,7 +7,7 @@
 
   public class Seperator : ObservableRecipient, ISnip
   {
-    private readonly string _theSeparator = " --------------------------------- ";
+    private readonly string _theSeparator = "---------------------------------------";
     private Guid _guid;
     public Seperator()
     {

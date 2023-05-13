@@ -41,7 +41,7 @@
     <Grid Grid.Row="1" Name="ButtonBar" Background="#FFF1F1F1" Cursor="Hand">
       <Thumb Opacity=".001" Grid.Row="1" Grid.RowSpan="2" DragDelta="Thumb_DragDelta" Background="#FF2F2828">
       </Thumb>
-      <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,17,0,1"  >
+      <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,1"  >
         <StackPanel>
           <Button x:Name="Menu" Command="{Binding OpenMenu}" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8">
             <Button.Background>

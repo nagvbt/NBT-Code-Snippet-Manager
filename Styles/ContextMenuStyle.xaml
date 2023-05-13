@@ -13,7 +13,11 @@
         <Image Source="../assets/add-snip.png" ></Image>
       </MenuItem.Icon>
     </MenuItem>
-    <MenuItem Header="Insert Separator" Command="{Binding InsertSeperator}" />
+    <MenuItem Header="Insert Separator" Command="{Binding InsertSeperator}" >
+      <MenuItem.Icon>
+        <Image Source="../assets/separator.png" ></Image>
+      </MenuItem.Icon>
+    </MenuItem>    
     <MenuItem Header="Delete" Command="{Binding DeleteSnippet}" >
     <MenuItem.Icon>
       <Image Source="../assets/remove.png" ></Image>

@@ -7,12 +7,12 @@ using NagCode.ViewModels;
 namespace NagCode.BL
 {
   public class DragDropManager
-    {
- 
+  {
+
     private Point _startPoint = new Point(0, 0);
     private FrameworkElement _draggingElement;
-    public NagCodeViewModel NagCodeModel;
-
+    private NagCodeViewModel _nagCodeModel;
+    private ListBox _snipList;
     /// <summary>
     /// Drag and Drop:
     /// Called for every mouse move on the snipList
@@ -20,6 +20,9 @@ namespace NagCode.BL
     /// </summary>
     public void MouseMove(object sender, MouseEventArgs e, ListBox snipList, NagCodeViewModel nagCodeModel)
     {
+      _snipList = snipList;
+      _nagCodeModel = nagCodeModel;
+
       if (e.LeftButton == MouseButtonState.Pressed)
       {
         e.Handled = true;
@@ -33,28 +36,22 @@ namespace NagCode.BL
         if (!(_startPoint.X == 0) || !(_startPoint.Y == 0))
         {
 
-          Point currentPoint = e.GetPosition(snipList);
+          Point currentPoint = e.GetPosition(_snipList);
           if ((Math.Abs(_startPoint.X - currentPoint.X) > 2) && (Math.Abs(_startPoint.Y - currentPoint.Y) > 2))
           {
+            DataObject dataObject = SetDataInClipboard();
 
-            if (snipList.SelectedIndex == -1)
+            if(dataObject == null)
             {
               return;
             }
 
-            object payload = nagCodeModel.SnipList[snipList.SelectedIndex].Data;
-
-            DataObject dataObject = new DataObject();
-            dataObject.SetData(payload);
-
-            Clipboard.SetDataObject(dataObject);
-
             DragDropEffects dropEffect = DragDrop.DoDragDrop(_draggingElement, dataObject, DragDropEffects.Copy | DragDropEffects.Move);
             if (dropEffect != DragDropEffects.None)
             {
-              if (snipList.SelectedIndex < snipList.Items.Count - 1)
+              if (_snipList.SelectedIndex < _snipList.Items.Count - 1)
               {
-                snipList.SelectedIndex++;
+                _snipList.SelectedIndex++;
               }
             }
           }
@@ -64,25 +61,6 @@ namespace NagCode.BL
     }
 
     /// <summary>
-    /// Drag and Drop:
-    /// Called for every selection changed on snipList
-    /// </summary>
-    public void SelectionChanged(ListBox snipList, NagCodeViewModel nagCodeModel)
-    {
-      if (snipList.SelectedIndex == -1)
-      {
-        return;
-      }
-      object payload = nagCodeModel.SnipList[snipList.SelectedIndex].Data;
-
-      DataObject dataObject = new DataObject();
-      dataObject.SetData(payload);
-
-      Clipboard.SetDataObject(dataObject);
-    }
-
-    /// <summary>
-    /// Drag and Drop:
     /// When Mouse Down on the ListItem(code Snip) the dragStartPoint and draggingElement created
     /// </summary>
     public void PreviewMouseDown(object sender, MouseButtonEventArgs e, ListBox snipList)
@@ -90,5 +68,33 @@ namespace NagCode.BL
       _startPoint = e.GetPosition(snipList);
       _draggingElement = sender as FrameworkElement;
     }
+
+    /// <summary>
+    /// Called for every selection changed on snipList
+    /// </summary>
+    public void SelectionChanged(ListBox snipList, NagCodeViewModel nagCodeModel)
+    {
+      _nagCodeModel = nagCodeModel;
+      _snipList = snipList;
+      SetDataInClipboard();
+    }
+
+    private DataObject SetDataInClipboard()
+    {
+      if (_snipList.SelectedIndex == -1)
+      {
+        return null;
+      }
+      object payload = _nagCodeModel.SnipList[_snipList.SelectedIndex].Data;
+
+      DataObject dataObject = new DataObject();
+      dataObject.SetData(payload);
+
+      Clipboard.SetDataObject(dataObject);
+
+      return dataObject;
+    }
+
+
   }
 }

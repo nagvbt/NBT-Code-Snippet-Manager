@@ -11,7 +11,9 @@
   using System.Linq;
   using System.Windows;
   using System.Windows.Controls;
-  
+  using System.Windows.Media.Imaging;
+
+
   public class NagCodeViewModel : ObservableRecipient
   {
     private ObservableCollection<Interfaces.ISnip> _snipList = new ObservableCollection<Interfaces.ISnip>();
@@ -19,6 +21,8 @@
     private Interfaces.ISnip _selectedSnip;
     private ContextMenu _mainMenu;
     private bool _isTopmost = true;
+    private string _header = "";
+    private MenuItem _menuItem;
     public bool IsInPresentMode { get; set; }
     public bool IsClipboardManager { get; set; }
     public bool IsDirty { get; set; }
@@ -32,12 +36,17 @@
     public RelayCommand OpenMenu { get; private set; }
 
 
+
     public NagCodeViewModel()
     {
       SnipList = new ObservableCollection<Interfaces.ISnip>();
 
       InitializeMainMenu();
+      CreateRelayCommands();
+    }
 
+    private void CreateRelayCommands()
+    {
       OpenMenu = new RelayCommand(OpenMenuMethod);
       InsertNewSnippet = new RelayCommand<bool>(InsertNewSnippetMethod);
       DeleteSnippet = new RelayCommand(DeleteSnippetMethod);
@@ -48,7 +57,6 @@
       Exit = new RelayCommand(ExitMethod);
     }
 
-      
     public bool IsTopmost
     {
       get => _isTopmost;
@@ -153,17 +161,17 @@
 
     public void OnPropertyChanged()
     {
-      IsDirty = true;
+
       OnPropertyChanged(nameof(SnipList));
     }
 
     internal void Add(string name, string data)
     {
-      IsDirty = true;
+
       SnipList.Add(new Models.Snip(_snipCounter, name, data));
       _snipCounter++;
       FixIds();
-     OnPropertyChanged(nameof(SnipList));
+      OnPropertyChanged(nameof(SnipList));
     }
 
     internal void InsertSeperatorMethod()
@@ -208,28 +216,69 @@
     /// </summary>
     private void InitializeMainMenu()
     {
+      CreateContextMenu();
+      AddMenuItems();
+      _mainMenu.IsOpen = false;
+    }
+
+    private void AddMenuItems()
+    {
+      AddMenuItem("Clipboard Manager");
+      AddMenuItem("Load");
+      AddMenuItem("New");
+      AddMenuItem("About");
+    }
+
+    private void CreateContextMenu()
+    {
       _mainMenu = new ContextMenu();
       _mainMenu.Width = 200;
+    }
 
-      var mainMenuItemActAsClipboardManager = new MenuItem { Header = "Clipboard Manager" };
-      mainMenuItemActAsClipboardManager.IsCheckable = true;
-      mainMenuItemActAsClipboardManager.IsChecked = IsClipboardManager;
-      mainMenuItemActAsClipboardManager.Click += ItemActAsClipboardManagerClick;
-      _mainMenu.Items.Add(mainMenuItemActAsClipboardManager);
+    private void AddMenuItem(string header)
+    {
+      _header = header;
+      _menuItem = new MenuItem { Header = _header };
+      if (_header == "Clipboard Manager")
+      {
+        _header = "clip-manager";
+      }
+      AddIconToMenuItem();
+      AttachHandlerToMenuItem();
 
-      var itemLoad = new MenuItem { Header = "Load" };
-      itemLoad.Click += new RoutedEventHandler(ItemLoadClick);
-      _mainMenu.Items.Add(itemLoad);
+      _mainMenu.Items.Add(_menuItem);
+    }
 
-      var itemNew = new MenuItem { Header = "New" };
-      itemNew.Click += new RoutedEventHandler(ItemNewClick);
-      _mainMenu.Items.Add(itemNew);
+    private void AttachHandlerToMenuItem()
+    {
+      switch (_header)
+      {
+        case "Clipboard Manager":
+          _menuItem.IsCheckable = true;
+          _menuItem.IsChecked = IsClipboardManager;
+          _menuItem.Click += new RoutedEventHandler(ClipboardManagerMenuItemClick);
+          break;
+        case "Load":
+          _menuItem.Click += new RoutedEventHandler(LoadMenuItemClick);
+          break;
+        case "New":
+          _menuItem.Click += new RoutedEventHandler(NewMenuItemClick);
+          break;
+        case "About":
+          _menuItem.Click += new RoutedEventHandler(AboutItemClick);
+          break;
 
-      var itemExit = new MenuItem { Header = "About" };
-      itemExit.Click += new RoutedEventHandler(AboutItemClick);
-      _mainMenu.Items.Add(itemExit);
+      }
+    }
 
-      _mainMenu.IsOpen = false;
+    private void AddIconToMenuItem()
+    {
+      string iconPath = "pack://application:,,,/assets/" + _header.ToLower() + ".png";
+
+      _menuItem.Icon = new Image
+      {
+        Source = new BitmapImage(new Uri(iconPath))
+      };
     }
 
     void AboutItemClick(object sender, RoutedEventArgs e)
@@ -239,11 +288,11 @@
       double Top = Properties.Settings.Default.Top;
       double Left = Properties.Settings.Default.Left;
       double Width = Properties.Settings.Default.Width;
-      
+
       about.WindowStartupLocation = WindowStartupLocation.Manual;
       about.Left = Left + Width;
       about.Top = Top;
-      
+
       about.Show();
     }
 
@@ -280,7 +329,7 @@
       writer.Close();
     }
 
-    void ItemLoadClick(object sender, RoutedEventArgs e)
+    void LoadMenuItemClick(object sender, RoutedEventArgs e)
     {
       // Configure save file dialog box
       Microsoft.Win32.OpenFileDialog openDialog = new Microsoft.Win32.OpenFileDialog();
@@ -343,12 +392,12 @@
       Environment.Exit(0);
     }
 
-    void ItemNewClick(object sender, RoutedEventArgs e)
+    void NewMenuItemClick(object sender, RoutedEventArgs e)
     {
       Clear();
     }
 
-    void ItemActAsClipboardManagerClick(object sender, RoutedEventArgs e)
+    void ClipboardManagerMenuItemClick(object sender, RoutedEventArgs e)
     {
       var item = sender as MenuItem;
       if (item != null)

@@ -5,7 +5,7 @@ namespace NagCode.BL
   public sealed class ClipboardNotification
   {
     /// <summary>
-    /// Occurs when the contents of the clipboard is updated.
+    /// The contents of the clipboard is updated.
     /// </summary>
     public static event EventHandler ClipboardUpdate;
 

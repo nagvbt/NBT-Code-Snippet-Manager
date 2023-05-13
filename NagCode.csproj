@@ -85,6 +85,7 @@
       <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
@@ -236,7 +237,9 @@
     <Resource Include="assets\add-snip.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="assets\up.png" />
+    <Resource Include="assets\up.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\down.png" />
@@ -245,6 +248,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="assets\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\separator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\clip-manager.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\load.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />

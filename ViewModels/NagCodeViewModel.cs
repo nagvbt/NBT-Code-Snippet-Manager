@@ -35,8 +35,6 @@
     public RelayCommand<bool> InsertNewSnippet { get; set; }
     public RelayCommand OpenMenu { get; private set; }
 
-
-
     public NagCodeViewModel()
     {
       SnipList = new ObservableCollection<Interfaces.ISnip>();

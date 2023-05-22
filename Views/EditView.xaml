@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        xmlns:local="using:NagCode"
+        xmlns:local="using:NagCode.Views"
         DataContext="{Binding Source={StaticResource Locator}, Path=EditViewModel}"
         Title="EditWindow" Height="500" Width="350" Topmost="False" Closed="Window_Closed">
   <Grid>

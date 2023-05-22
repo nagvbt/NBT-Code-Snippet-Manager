@@ -67,7 +67,7 @@
             ShowEditView(editWindow);
           }
 
-          editWindow.EditViewModel.SnipToEdit.PropertyChanged += EditWindowChange;
+          editWindow._editViewModel.SnipToEdit.PropertyChanged += EditWindowChange;
         }
       }
     }

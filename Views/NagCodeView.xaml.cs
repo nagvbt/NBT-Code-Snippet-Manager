@@ -11,9 +11,9 @@
   public partial class NagCodeView : Window
   {
 
+    public NagCodeViewModel _nagCodeViewModel => DataContext as NagCodeViewModel;
+    public ClipboardNotification _clipboardNotification { get; set; }
     private DragDropManager _dragDropManager = new DragDropManager();
-    public NagCodeViewModel NagCodeModel => DataContext as NagCodeViewModel;
-    public ClipboardNotification SnippetLogic { get; set; }
 
     public NagCodeView()
     {
@@ -38,8 +38,8 @@
 
     private void InitializeApp()
     {
-      NagCodeModel.ReadSnipFileUsingFilepathSetting();
-    }
+      _nagCodeViewModel.ReadSnipFileUsingFilepathSetting();
+     }
 
     private void SaveWindowLocationInSettings()
     {
@@ -52,9 +52,9 @@
 
     private void ClipboardUpdate(object sender, EventArgs e)
     {
-      if (NagCodeModel.IsClipboardManager)
+      if (_nagCodeViewModel.IsClipboardManager)
       {
-        NagCodeModel.InsertNewSnippetMethod(true);
+        _nagCodeViewModel.InsertNewSnippetMethod(true);
       }
     }
 
@@ -67,13 +67,13 @@
 
     private void ApplicationExit(object sender, ExitEventArgs e)
     {
-      NagCodeModel.ExitMethod();
+      _nagCodeViewModel.ExitMethod();
     }
 
     private void LaunchPresentView()
     {
-      NagCodeModel.IsInPresentMode = true;
-      NagCodeModel.IsClipboardManager = false;
+      _nagCodeViewModel.IsInPresentMode = true;
+      _nagCodeViewModel.IsClipboardManager = false;
 
       var presentWindow = new PresentationView();
       presentWindow.Show();
@@ -91,32 +91,32 @@
 
     private void ToggleTopmost(bool isTopmost)
     {
-      if (NagCodeModel != null)
+      if (_nagCodeViewModel != null)
       {
-        NagCodeModel.IsTopmost = isTopmost;
+        _nagCodeViewModel.IsTopmost = isTopmost;
       }
       Topmost = isTopmost;
     }
 
     private void OpenEditView()
     {
-      EditViewLogic editViewLogic = new EditViewLogic(NagCodeModel, SnipList);
-      editViewLogic.OpeningRequest(NagCodeModel.SelectedSnip, false);
+      EditViewLogic editViewLogic = new EditViewLogic(_nagCodeViewModel, SnipList);
+      editViewLogic.OpeningRequest(_nagCodeViewModel.SelectedSnip, false);
     }
 
     private void MoveSnipUpDown(KeyEventArgs e)
     {
-      if (NagCodeModel.IsInPresentMode)
+      if (_nagCodeViewModel.IsInPresentMode)
       {
         return;
       }
       if (e.Key == Key.Up)
       {
-        NagCodeModel.MoveSnippetUpMethod();       
+        _nagCodeViewModel.MoveSnippetUpMethod();       
       }
       else if (e.Key == Key.Down)
       {
-        NagCodeModel.MoveSnippetDownMethod();       
+        _nagCodeViewModel.MoveSnippetDownMethod();       
       }
       e.Handled = true;
     }
@@ -126,7 +126,7 @@
 
     private void NagCodeView_Closed(object sender, EventArgs e)
     {
-      NagCodeModel.ExitMethod();
+      _nagCodeViewModel.ExitMethod();
     }
 
     private void NagCodeView_LocationChanged(object sender, EventArgs e)
@@ -157,12 +157,12 @@
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-      NagCodeModel.ExitMethod();
+      _nagCodeViewModel.ExitMethod();
     }
 
     private void CloseLabel_MouseDown(object sender, MouseButtonEventArgs e)
     {
-      NagCodeModel.ExitMethod();
+      _nagCodeViewModel.ExitMethod();
     }
 
     private void PresentWindowClosedAction(object sender, EventArgs e)
@@ -192,12 +192,12 @@
 
     private void SnipList_MouseMove(object sender, MouseEventArgs e)
     {
-      _dragDropManager.MouseMove(sender, e, SnipList, NagCodeModel);
+      _dragDropManager.MouseMove(sender, e, SnipList, _nagCodeViewModel);
     }
 
     private void SnipList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      _dragDropManager.SelectionChanged(SnipList, NagCodeModel);
+      _dragDropManager.SelectionChanged(SnipList, _nagCodeViewModel);
     }
 
     private void SnipList_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -207,7 +207,7 @@
 
     private void MenuLabel_MouseDown(object sender, MouseButtonEventArgs e)
     {
-      NagCodeModel.OpenMenuMethod();
+      _nagCodeViewModel.OpenMenuMethod();
     }
     #endregion // ui-handlers
 

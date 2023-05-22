@@ -43,36 +43,36 @@
       </Thumb>
       <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,1"  >
         <StackPanel>
-          <Button x:Name="Menu" Command="{Binding OpenMenu}" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8">
+          <Button x:Name="Menu" Command="{Binding OpenMenu}" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8" Cursor="Arrow">
             <Button.Background>
               <ImageBrush ImageSource="../assets/menu.png" Stretch="Uniform"/>
             </Button.Background>
           </Button>
-          <Label x:Name="MenuLabel"  Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="MenuLabel_MouseDown">Menu</Label>
+          <Label x:Name="MenuLabel"  Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="MenuLabel_MouseDown" Cursor="Arrow">Menu</Label>
         </StackPanel>
         
         <StackPanel>
           <CheckBox  IsChecked="True"  x:Name="MyTopmostCheckBox" 
-                   Checked="MyTopmostCheckBox_Checked" Unchecked="MyTopmostCheckBox_Unchecked" Foreground="Black"  Width="34" Height="29" HorizontalAlignment="Right"/>
-          <Label x:Name="TopmostLabel" Height="25" Width="52" Margin="0,-19,0,0" HorizontalAlignment="Center" FontSize="11" Content="Topmost" />
+                   Checked="MyTopmostCheckBox_Checked" Unchecked="MyTopmostCheckBox_Unchecked" Foreground="Black"  Width="34" Height="29" HorizontalAlignment="Right" Cursor="Arrow"/>
+          <Label x:Name="TopmostLabel" Height="25" Width="52" Margin="0,-19,0,0" HorizontalAlignment="Center" FontSize="11" Content="Topmost" Cursor="Arrow" />
         </StackPanel>
         <StackPanel >
-          <Button x:Name="Close" Click="CloseButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8">
+          <Button x:Name="Close" Click="CloseButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8" Cursor="Arrow">
             <Button.Background>
               <ImageBrush ImageSource="../assets/close.png" Stretch="Uniform"/>
             </Button.Background>
           </Button>
-          <Label x:Name="CloseLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="CloseLabel_MouseDown">Close</Label>
+          <Label x:Name="CloseLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="CloseLabel_MouseDown" Cursor="Arrow">Close</Label>
         </StackPanel>
     
       
       <StackPanel >
-          <Button x:Name="Present" Click="PresentButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8">
+          <Button x:Name="Present" Click="PresentButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8" Cursor="Arrow">
             <Button.Background>
               <ImageBrush ImageSource="../assets/present.png" Stretch="Uniform"/>
             </Button.Background>
           </Button>
-          <Label x:Name="PresentLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="PresentLabel_MouseDown">Present</Label>
+          <Label x:Name="PresentLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="PresentLabel_MouseDown" Cursor="Arrow">Present</Label>
         </StackPanel>
       </StackPanel>
     </Grid>

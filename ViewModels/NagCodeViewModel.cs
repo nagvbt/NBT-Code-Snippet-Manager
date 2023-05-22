@@ -123,13 +123,13 @@
         SnipList[indexA] = tmpB;
         SnipList[indexB] = tmpA;
 
-        FixIds();
+        ReorderIds();
 
         SelectedSnip = SnipList[indexB];
       }
     }
 
-    private void FixIds()
+    private void ReorderIds()
     {
       var counter = 1;
       foreach (var item in SnipList)
@@ -154,7 +154,7 @@
       {
         IsDirty = true;
         SnipList.Remove(SelectedSnip);
-        FixIds();
+        ReorderIds();
         OnPropertyChanged(nameof(SnipList));
       }
     }
@@ -170,7 +170,7 @@
 
       SnipList.Add(new Models.Snip(_snipCounter, name, data));
       _snipCounter++;
-      FixIds();
+      ReorderIds();
       OnPropertyChanged(nameof(SnipList));
     }
 
@@ -281,6 +281,24 @@
       };
     }
 
+    void ClipboardManagerMenuItemClick(object sender, RoutedEventArgs e)
+    {
+      var item = sender as MenuItem;
+      if (item != null)
+      {
+        if (IsClipboardManager)
+        {
+          item.IsChecked = false;
+          IsClipboardManager = false;
+        }
+        else
+        {
+          item.IsChecked = true;
+          IsClipboardManager = true;
+        }
+      }
+    }
+
     void AboutItemClick(object sender, RoutedEventArgs e)
     {
       About about = new About();
@@ -298,6 +316,7 @@
 
     public void Export()
     {
+
       // Configure save file dialog box
       Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
       saveDialog.FileName = "NewSnip"; // Default file name
@@ -397,23 +416,6 @@
       Clear();
     }
 
-    void ClipboardManagerMenuItemClick(object sender, RoutedEventArgs e)
-    {
-      var item = sender as MenuItem;
-      if (item != null)
-      {
-        if (IsClipboardManager)
-        {
-          item.IsChecked = false;
-          IsClipboardManager = false;
-        }
-        else
-        {
-          item.IsChecked = true;
-          IsClipboardManager = true;
-        }
-      }
-    }
 
     void ItemAlwaysOnTopClick(object sender, RoutedEventArgs e)
     {

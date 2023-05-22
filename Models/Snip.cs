@@ -62,6 +62,7 @@
     public Guid GuId
     {
       get => _guid;
+      set => _guid = value;
     }
 
     public Snip(int id, String name, String data)
@@ -69,6 +70,7 @@
       Name = name;
       Data = data;
       Id = id;
+      GuId = Guid.NewGuid();
     }
 
     private void CallOnPropertyChanged()

@@ -6,8 +6,8 @@
 
   public partial class EditView : Window
   {
-    public EditViewModel EditViewModel => DataContext as EditViewModel;
-    public NagCodeViewModel _nagCodeModel;
+    public EditViewModel _editViewModel => DataContext as EditViewModel;
+    public NagCodeViewModel _nagCodeViewModel;
     private bool _isEditing = false;
 
     /// <summary>
@@ -19,7 +19,8 @@
     {
 
       InitializeComponent();
-      InitEditOrNewView(nagCodeModel, true);
+      _nagCodeViewModel= nagCodeModel;
+      InitEditOrNewView(true);
       SetEditViewModelAndTextBox(snipToEdit);
     }
 
@@ -30,21 +31,21 @@
     public EditView(NagCodeViewModel nagCodeModel)
     {
       InitializeComponent();
-      InitEditOrNewView(nagCodeModel, false);
+      _nagCodeViewModel = nagCodeModel;
+      InitEditOrNewView(false);
     }
 
     private void SetEditViewModelAndTextBox(Snip snipToEdit)
     {
       txtName.Text = snipToEdit.Name;
       txtData.Text = snipToEdit.Data;
-      EditViewModel.SnipToEdit = snipToEdit;
+      _editViewModel.SnipToEdit = snipToEdit;
     }
 
-    private void InitEditOrNewView(NagCodeViewModel nagCodeModel, bool isEditing)
+    private void InitEditOrNewView(bool isEditing)
     {
+      txtName.Focus();
       _isEditing = isEditing;
-      _nagCodeModel = nagCodeModel;
-
       if (isEditing)
       {
         Title = "Edit Snip";
@@ -60,14 +61,13 @@
       if (_isEditing)
       {
         // Edit new snip
-        EditViewModel.SnipToEdit.Name = txtName.Text;
-        EditViewModel.SnipToEdit.Data = txtData.Text;
+        _editViewModel.SnipToEdit.Name = txtName.Text;
+        _editViewModel.SnipToEdit.Data = txtData.Text;
       }
       else
       {
         // Add new snip
-        _nagCodeModel.Add(txtName.Text, txtData.Text);
-
+        _nagCodeViewModel.Add(txtName.Text, txtData.Text);
       }
     }
     private void ValidateTextBoxes()

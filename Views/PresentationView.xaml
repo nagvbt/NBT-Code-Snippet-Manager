@@ -10,7 +10,6 @@
         Height="300"
         Width="40" MaxWidth="20"
         Topmost="True"
-
         DataContext="{Binding Source={StaticResource Locator}, Path=NagCodeViewModel}" Closed="PresentWindowWindow_Closed">
     <Grid>
         <Grid.RowDefinitions>
@@ -54,7 +53,7 @@
           <TransformGroup>
             <ScaleTransform/>
             <SkewTransform/>
-            <RotateTransform Angle="3.564"/>
+            <RotateTransform Angle="1.061"/>
             <TranslateTransform/>
           </TransformGroup>
         </Button.RenderTransform>

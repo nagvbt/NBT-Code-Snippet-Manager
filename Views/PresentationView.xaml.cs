@@ -9,8 +9,7 @@
 
   public partial class PresentationView : Window
   {
-    public ViewModels.NagCodeViewModel NagCodeModel => DataContext as ViewModels.NagCodeViewModel;
-
+    public  NagCodeViewModel _nagCodeViewModel => DataContext as NagCodeViewModel;
     private DragDropManager _dragDropManager = new DragDropManager();
     private EditViewLogic _editViewLogic;
 
@@ -50,9 +49,9 @@
 
     private void OpenEditView()
     {
-      _editViewLogic = new EditViewLogic(NagCodeModel, SnipList);
+      _editViewLogic = new EditViewLogic(_nagCodeViewModel, SnipList);
       SetEditViewPosition();
-      _editViewLogic.OpeningRequest(NagCodeModel.SelectedSnip, true);
+      _editViewLogic.OpeningRequest(_nagCodeViewModel.SelectedSnip, true);
     }
 
     #region view-handlers
@@ -67,7 +66,7 @@
     }
     private void PresentWindowWindow_Closed(object sender, System.EventArgs e)
     {
-      NagCodeModel.IsInPresentMode = false;
+      _nagCodeViewModel.IsInPresentMode = false;
     }
 
     private void MoveButton_Click(object sender, RoutedEventArgs e)
@@ -83,12 +82,12 @@
 
     private void SnipList_MouseMove(object sender, MouseEventArgs e)
     {
-      _dragDropManager.MouseMove(sender, e, SnipList, NagCodeModel);
+      _dragDropManager.MouseMove(sender, e, SnipList, _nagCodeViewModel);
     }
 
     private void SnipList_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      _dragDropManager.SelectionChanged(SnipList, NagCodeModel);
+      _dragDropManager.SelectionChanged(SnipList, _nagCodeViewModel);
     }
 
     private void SnipList_PreviewMouseDown(object sender, MouseButtonEventArgs e)

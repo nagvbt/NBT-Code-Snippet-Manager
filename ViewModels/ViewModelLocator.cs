@@ -3,8 +3,13 @@
     using CommunityToolkit.Mvvm.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection;
 
+    /// <summary>
+    /// Author: NBT
+    /// 
+    /// </summary>
     public class ViewModelLocator
     {
+
         static ViewModelLocator()
         {
             Ioc.Default.ConfigureServices(
@@ -19,4 +24,3 @@
         public EditViewModel EditViewModel => Ioc.Default.GetService<EditViewModel>();
     }
 }
- 

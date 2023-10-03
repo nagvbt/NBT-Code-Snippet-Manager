@@ -33,7 +33,7 @@
                             <Grid.ToolTip>
                                 <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="FctbPreviewEditor" FontFamily="Consolas" SyntaxHighlighting="C#" FontSize="10pt" Document="{Binding Document}" />
                             </Grid.ToolTip>
-                            
+
                             <TextBlock Text="{Binding Id}" Grid.Column="0" />
                             <TextBlock Text="{Binding Name}" Grid.Column="1" />
                         </Grid>
@@ -46,18 +46,18 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            
+
             <Button Grid.Column="0" Content="o" ToolTip="Move to other side" Click="MoveButton_Click" FontSize="3" BorderBrush="#FF2FB343" BorderThickness="4,4,4,4" Grid.ColumnSpan="2" Margin="0,0,-10,0" />
-      <Button Grid.Column="1" Content="x" ToolTip="Exit present mode" Click="CloseButton_Click" FontSize="3" BorderBrush="#FFA01212" BorderThickness="4,4,4,4" Margin="14,0,-24,0" RenderTransformOrigin="0.5,0.5" >
-        <Button.RenderTransform>
-          <TransformGroup>
-            <ScaleTransform/>
-            <SkewTransform/>
-            <RotateTransform Angle="1.061"/>
-            <TranslateTransform/>
-          </TransformGroup>
-        </Button.RenderTransform>
-      </Button>
-    </Grid>
+            <Button Grid.Column="1" Content="x" ToolTip="Exit present mode" Click="CloseButton_Click" FontSize="3" BorderBrush="#FFA01212" BorderThickness="4,4,4,4" Margin="14,0,-24,0" RenderTransformOrigin="0.5,0.5" >
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="1.061"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+        </Grid>
     </Grid>
 </Window>

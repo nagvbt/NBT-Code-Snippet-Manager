@@ -3,18 +3,22 @@ using NagCode.Models;
 
 namespace NagCode.ViewModels
 {
-  public class EditViewModel : ObservableRecipient
-  {
-    private Snip _snipToEdit;
-
-    public Snip SnipToEdit
+    /// <summary>
+    /// Author: NBT
+    /// 
+    /// </summary>
+    public class EditViewModel : ObservableRecipient
     {
-      get => _snipToEdit;
-      set
-      {
-        _snipToEdit = value;
-        OnPropertyChanged(nameof(_snipToEdit));
-      }
+        private Snip _snipToEdit;
+
+        public Snip SnipToEdit
+        {
+            get => _snipToEdit;
+            set
+            {
+                _snipToEdit = value;
+                OnPropertyChanged(nameof(_snipToEdit));
+            }
+        }
     }
-  }
 }

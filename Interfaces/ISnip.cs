@@ -1,17 +1,20 @@
 ﻿namespace NagCode.Interfaces
 {
-  using ICSharpCode.AvalonEdit.Document;
-  using Newtonsoft.Json;
-  using System;
-  using System.ComponentModel;
+    using ICSharpCode.AvalonEdit.Document;
+    using Newtonsoft.Json;
+    using System;
+    using System.ComponentModel;
 
-  public interface ISnip : INotifyPropertyChanged
+    /// <summary>
+    /// Author: NBT
+    /// ISnip
+    /// </summary>
+    public interface ISnip : INotifyPropertyChanged
     {
         string Name { get; }
         string Data { get; }
         bool IsSeperator { get; }
         string ToString();
-
         Guid GuId { get; }
 
         [JsonIgnore]

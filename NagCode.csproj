@@ -144,6 +144,9 @@
     <Compile Include="ViewModels\EditViewModel.cs" />
     <Compile Include="ViewModels\NagCodeViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\SplitterWindow.xaml.cs">
+      <DependentUpon>SplitterWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -173,6 +176,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\TooltipStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplitterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

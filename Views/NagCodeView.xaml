@@ -6,77 +6,77 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=NagCodeViewModel}"
     Title="NagCode" Height="500" Width="200" Closed="NagCodeView_Closed" LocationChanged="NagCodeView_LocationChanged" SizeChanged="NagCodeView_SizeChanged">
 
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="293*"/>
-      <RowDefinition Height="60"/>
-    </Grid.RowDefinitions>
-    <Grid Grid.Row="0">
-      <ListBox x:Name="SnipList" HorizontalContentAlignment="Stretch" SelectionMode="Single"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="293*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ListBox x:Name="SnipList" HorizontalContentAlignment="Stretch" SelectionMode="Single"
          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
          FontSize="12" ItemsSource="{Binding SnipList, Mode=OneWay}" 
          MouseDoubleClick="SnipList_MouseDoubleClick" PreviewKeyDown="SnipList_PreviewKeyDown"
          SelectedItem="{Binding SelectedSnip, Mode=TwoWay}"
          ContextMenu="{StaticResource ContextMenuSnippetsList}" MouseMove="SnipList_MouseMove" SelectionChanged="SnipList_SelectionChanged" PreviewMouseDown="SnipList_PreviewMouseDown">
 
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <Grid HorizontalAlignment="Stretch">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15" />
-                <ColumnDefinition Width="*" />
-              </Grid.ColumnDefinitions>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="15" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-              <Grid.ToolTip>
-                <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="FctbPreviewEditor" FontFamily="Consolas" SyntaxHighlighting="C#" FontSize="10pt" Document="{Binding Document}" />
-              </Grid.ToolTip>
+                            <Grid.ToolTip>
+                                <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="FctbPreviewEditor" FontFamily="Consolas" SyntaxHighlighting="C#" FontSize="10pt" Document="{Binding Document}" />
+                            </Grid.ToolTip>
 
-              <TextBlock Text="{Binding Id}" Grid.Column="0" />
-              <TextBlock Text="{Binding Name}" Grid.Column="1" />
-            </Grid>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
-    </Grid>
+                            <TextBlock Text="{Binding Id}" Grid.Column="0" />
+                            <TextBlock Text="{Binding Name}" Grid.Column="1" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
 
-    <Grid Grid.Row="1" Name="ButtonBar" Background="#FFD7CEDE" Cursor="Hand">
-      <Thumb Opacity=".001" Grid.Row="1" Grid.RowSpan="2" DragDelta="Thumb_DragDelta" Background="#FF7E1EB7">
-      </Thumb>
-      <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,1"  >
-        <StackPanel>
-          <Button x:Name="Menu" Command="{Binding OpenMenu}" Height="18" Width="27" Cursor="Arrow" BorderBrush="#FFD7CEDE">
-            <Button.Background>
-              <ImageBrush ImageSource="../assets/menu.png" Stretch="Uniform"/>
-            </Button.Background>
-          </Button>
-          <Label x:Name="MenuLabel"  Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="MenuLabel_MouseDown" Cursor="Arrow">Menu</Label>
-        </StackPanel>
-        
-        <StackPanel>
-          <CheckBox  IsChecked="True"  x:Name="MyTopmostCheckBox" 
+        <Grid Grid.Row="1" Name="ButtonBar" Background="#FFD7CEDE" Cursor="Hand">
+            <Thumb Opacity=".001" Grid.Row="1" Grid.RowSpan="2" DragDelta="Thumb_DragDelta" Background="#FF7E1EB7">
+            </Thumb>
+            <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,2,0,1"  >
+                <StackPanel>
+                    <Button x:Name="Menu" Command="{Binding OpenMenu}" Height="18" Width="27" Cursor="Arrow" BorderBrush="#FFD7CEDE">
+                        <Button.Background>
+                            <ImageBrush ImageSource="../assets/menu.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Label x:Name="MenuLabel"  Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="MenuLabel_MouseDown" Cursor="Arrow">Menu</Label>
+                </StackPanel>
+
+                <StackPanel>
+                    <CheckBox  IsChecked="True"  x:Name="MyTopmostCheckBox" 
                    Checked="MyTopmostCheckBox_Checked" Unchecked="MyTopmostCheckBox_Unchecked" Foreground="Black"  Width="34" Height="29" HorizontalAlignment="Right" Cursor="Arrow"/>
-          <Label x:Name="TopmostLabel" Height="25" Width="52" Margin="0,-19,0,0" HorizontalAlignment="Center" FontSize="11" Content="Topmost" Cursor="Arrow" />
-        </StackPanel>
-        <StackPanel >
-          <Button x:Name="Close" Click="CloseButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8" Cursor="Arrow">
-            <Button.Background>
-              <ImageBrush ImageSource="../assets/close.png" Stretch="Uniform"/>
-            </Button.Background>
-          </Button>
-          <Label x:Name="CloseLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="CloseLabel_MouseDown" Cursor="Arrow">Close</Label>
-        </StackPanel>
-    
-      
-      <StackPanel >
-          <Button x:Name="Present" Click="PresentButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8" Cursor="Arrow">
-            <Button.Background>
-              <ImageBrush ImageSource="../assets/present.png" Stretch="Uniform"/>
-            </Button.Background>
-          </Button>
-          <Label x:Name="PresentLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="PresentLabel_MouseDown" Cursor="Arrow">Present</Label>
-        </StackPanel>
-      </StackPanel>
+                    <Label x:Name="TopmostLabel" Height="25" Width="52" Margin="0,-19,0,0" HorizontalAlignment="Center" FontSize="11" Content="Topmost" Cursor="Arrow" />
+                </StackPanel>
+                <StackPanel >
+                    <Button x:Name="Close" Click="CloseButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8" Cursor="Arrow">
+                        <Button.Background>
+                            <ImageBrush ImageSource="../assets/close.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Label x:Name="CloseLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="CloseLabel_MouseDown" Cursor="Arrow">Close</Label>
+                </StackPanel>
+
+
+                <StackPanel >
+                    <Button x:Name="Present" Click="PresentButton_Click" Height="18" Width="27" Foreground="#FFF4F4F4" BorderBrush="#FFE9D8D8" Cursor="Arrow">
+                        <Button.Background>
+                            <ImageBrush ImageSource="../assets/present.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <Label x:Name="PresentLabel" Height="22" HorizontalAlignment="Right" Margin="0,-8,0,0" FontSize="11" MouseDown="PresentLabel_MouseDown" Cursor="Arrow">Present</Label>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
-  </Grid>
 </Window>
     

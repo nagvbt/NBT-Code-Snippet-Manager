@@ -1,82 +1,86 @@
 ﻿namespace NagCode.Models
 {
-  using CommunityToolkit.Mvvm.ComponentModel;
-  using ICSharpCode.AvalonEdit.Document;
-  using Interfaces;
-  using System;
-  using System.Text.RegularExpressions;
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using ICSharpCode.AvalonEdit.Document;
+    using Interfaces;
+    using System;
+    using System.Text.RegularExpressions;
 
-  public class Snip : ObservableRecipient, ISnip
-  {
-    private int _id = 0;
-    private string _name;
-    private string _data;
-    private Guid _guid;
-    private readonly Regex trimmer = new Regex(@"\s\s+");
-
-    public Snip()
+    /// <summary>
+    /// Author: NBT
+    /// 
+    /// </summary>
+    public class Snip : ObservableRecipient, ISnip
     {
-      _guid = Guid.NewGuid();
-    }
+        private int _id = 0;
+        private string _name;
+        private string _data;
+        private Guid _guid;
+        private readonly Regex trimmer = new Regex(@"\s\s+");
 
-    public int Id
-    {
-      get => _id;
-      set
-      {
-        _id = value;
-        OnPropertyChanged();
-      }
-    }
+        public Snip()
+        {
+            _guid = Guid.NewGuid();
+        }
 
-    public string Name
-    {
-      get => _name;
-      set
-      {
-        _name = trimmer.Replace(value, " ").Replace("\r\n", "");
-        CallOnPropertyChanged();
-      }
-    }
+        public int Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
 
-    public string Data
-    {
-      get => _data;
-      set
-      {
-        _data = value;
-        CallOnPropertyChanged();
-      }
-    }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = trimmer.Replace(value, " ").Replace("\r\n", "");
+                CallOnPropertyChanged();
+            }
+        }
 
-    public TextDocument Document
-    {
-      get => new TextDocument() { Text = string.Format("#{0}\r\n{1}", Name, Data) };
-    }
+        public string Data
+        {
+            get => _data;
+            set
+            {
+                _data = value;
+                CallOnPropertyChanged();
+            }
+        }
 
-    public bool IsSeperator
-    {
-      get => false;
-    }
+        public TextDocument Document
+        {
+            get => new TextDocument() { Text = string.Format("#{0}\r\n{1}", Name, Data) };
+        }
 
-    public Guid GuId
-    {
-      get => _guid;
-      set => _guid = value;
-    }
+        public bool IsSeperator
+        {
+            get => false;
+        }
 
-    public Snip(int id, String name, String data)
-    {
-      Name = name;
-      Data = data;
-      Id = id;
-      GuId = Guid.NewGuid();
-    }
+        public Guid GuId
+        {
+            get => _guid;
+            set => _guid = value;
+        }
 
-    private void CallOnPropertyChanged()
-    {
-      OnPropertyChanged();
-      OnPropertyChanged(nameof(Document));
+        public Snip(int id, String name, String data)
+        {
+            Name = name;
+            Data = data;
+            Id = id;
+            GuId = Guid.NewGuid();
+        }
+
+        private void CallOnPropertyChanged()
+        {
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(Document));
+        }
     }
-  }
 }

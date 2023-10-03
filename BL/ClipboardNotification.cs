@@ -2,24 +2,28 @@
 
 namespace NagCode.BL
 {
-  public sealed class ClipboardNotification
-  {
     /// <summary>
-    /// The contents of the clipboard is updated.
+    /// Author: NBT
+    /// ClipboardNotification for managing clipboard notifications
     /// </summary>
-    public static event EventHandler ClipboardUpdate;
-
-    private static NotificationForm _form = new NotificationForm();
-
-    /// <summary>
-    /// Raises the <see cref="ClipboardUpdate"/> event.
-    /// </summary>
-    /// <param name="e">Event arguments for the event.</param>
-    public static void OnClipboardUpdate(EventArgs e)
+    public sealed class ClipboardNotification
     {
-      ClipboardUpdate?.Invoke(null, e);
-    }
+        /// <summary>
+        /// The contents of the clipboard is updated.
+        /// </summary>
+        public static event EventHandler ClipboardUpdate;
 
-    
-  }
+        private static NotificationForm _form = new NotificationForm();
+
+        /// <summary>
+        /// Raises the <see cref="ClipboardUpdate"/> event.
+        /// </summary>
+        /// <param name="e">Event arguments for the event.</param>
+        public static void OnClipboardUpdate(EventArgs e)
+        {
+            ClipboardUpdate?.Invoke(null, e);
+        }
+
+
+    }
 }

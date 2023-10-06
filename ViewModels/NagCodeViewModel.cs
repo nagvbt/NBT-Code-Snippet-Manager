@@ -249,6 +249,11 @@
                 _header = "clip-manager";
             }
             AddIconToMenuItem();
+
+            if (_header == "clip-manager")
+            {
+                _header = "Clipboard Manager";
+            }
             AttachHandlerToMenuItem();
 
             _mainMenu.Items.Add(_menuItem);
@@ -384,11 +389,19 @@
 
         private void ReadSnipFile(string filename)
         {
-            using (TextReader reader = new StreamReader(filename))
+            try
             {
-                var fileContent = reader.ReadToEnd();
-                DeserializeList(fileContent);
-                SelectedSnip = null;
+                using (TextReader reader = new StreamReader(filename))
+                {
+                    var fileContent = reader.ReadToEnd();
+                    DeserializeList(fileContent);
+                    SelectedSnip = null;
+                }
+            }
+            catch (Exception e)
+            {
+                //// Let the user know what went wrong.
+                MessageBox.Show("The file could not be found. Please create new snippet file or Load new snippet file if you have one.", filename, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

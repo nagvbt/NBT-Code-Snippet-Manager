@@ -62,6 +62,7 @@
 
         private void EditOrAddSnip()
         {
+            _nagCodeViewModel.IsDirty = true;
             if (_isEditing)
             {
                 // Edit new snip

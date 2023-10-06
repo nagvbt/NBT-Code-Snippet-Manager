@@ -1,8 +1,14 @@
-# NagCode
+# What's New
 
 NagCode is an excellent tool for the coding presentations and tutorials. Contains advanced features that you love.
 
-## Features:
+## 2.0 (06-10-2023):
+
+1. Fixed - Clipboard Manager not working
+2. Fixed - The file could not be found issue
+3. Fixed - Edit or Add Snip not working
+
+## 1.0:
 
 - Insert a code snippet from the clipboard into program
 - Add snippets
